@@ -21,8 +21,9 @@ class gl_viewer : public QOpenGLWidget {
 
  public:
   gl_viewer(QWidget *parent = nullptr);
-
+  QString filename;
   QColor background_color;
+  obj_data total_data;
 
 
  private:
@@ -31,7 +32,7 @@ class gl_viewer : public QOpenGLWidget {
   void paintGL();
 
   Ui::gl_viewer *ui;
-  obj_data total_data;
+
 };
 
 

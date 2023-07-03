@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QColorDialog>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QStandardPaths>
+#include <QVBoxLayout>
 #include "gl_viewer.h"
 
 QT_BEGIN_NAMESPACE
