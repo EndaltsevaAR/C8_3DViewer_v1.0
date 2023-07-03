@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QStandardPaths>
 #include <QVBoxLayout>
+#include <QSettings>
 #include "gl_viewer.h"
 
 QT_BEGIN_NAMESPACE
@@ -27,11 +28,14 @@ public:
     double x_scale_in, y_scale_in, z_scale_in;
 
    void set_start_information();
+   void save_settings();
+   void load_settings();
 
 private slots:
     void on_button_pick_file_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QSettings *settings;
 };
 #endif // MAINWINDOW_H

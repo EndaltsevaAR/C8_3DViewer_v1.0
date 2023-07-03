@@ -43,12 +43,13 @@ class gl_viewer : public QOpenGLWidget {
   bool is_projection_ortho; //вид проекции - по умолчанию орто
   bool is_edge_solid;  // тип отображения ребер - по умолчанию - сплошной
   enum vertex_type vert_type;
+  bool destroy_status = false; // необходимость очищать память
 
   QColor background_color;
   QColor vertex_color;
   QColor edge_color;
 
-
+  void destroy_viewer();
 
  private:
   void resizeGL(int w, int h);

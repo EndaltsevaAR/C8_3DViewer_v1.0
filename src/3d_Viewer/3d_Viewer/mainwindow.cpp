@@ -9,11 +9,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     set_start_information();
+    load_settings();
 
 }
 
 MainWindow::~MainWindow()
 {
+    ui->viewer_gl_widget->destroy_viewer();
+    save_settings();
     delete ui;
 }
 
@@ -39,6 +42,31 @@ void MainWindow::set_start_information() {
     ui->viewer_gl_widget->vertex_color = Qt::black;
 }
 
+void MainWindow::save_settings() {
+    settings->beginGroup("Common");
+    settings->setValue("background_color", ui->viewer_gl_widget->background_color);
+    settings->setValue("projection_type", ui->viewer_gl_widget->is_projection_ortho);
+    settings->endGroup();
+
+    settings->beginGroup("Vertex");
+    settings->setValue("vertex_type", ui->viewer_gl_widget->vert_type);
+    settings->setValue("vertex_color", ui->viewer_gl_widget->vertex_color);
+    settings->setValue("vertex_depth", ui->viewer_gl_widget->vertex_depth);
+    settings->endGroup();
+
+    settings->beginGroup("Edge");
+    settings->setValue("edge_type", ui->viewer_gl_widget->is_edge_solid);
+    settings->setValue("edge_color", ui->viewer_gl_widget->edge_color);
+    settings->setValue("edge_depth", ui->viewer_gl_widget->edge_depth);
+    settings->endGroup();
+}
+
+void MainWindow::load_settings() {
+    settings = new QSettings("3D", "Config");
+    settings->beginGroup("Common");
+
+    settings->endGroup();
+}
 
 void MainWindow::on_button_pick_file_clicked()
 {
