@@ -5,6 +5,8 @@ gl_viewer::gl_viewer(QWidget *parent) : QOpenGLWidget(parent) {
 }
 
 void gl_viewer::paintGL() {
+    glClearColor(background_color.redF(), background_color.greenF(),
+                 background_color.blueF(), background_color.alphaF());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     char file_name[] = "../../test_files_obj/cube.obj";  // строка для дебага
     start(file_name, &total_data);
@@ -28,7 +30,4 @@ void gl_viewer::resizeGL(int w, int h) {
     glViewport(0,0,w,h);
 }
 
-void gl_viewer::initializeGL() {
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    f->glClearColor(0.0f, 1.0f, 0.8f, 1.0f);
-}
+

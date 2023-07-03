@@ -16,18 +16,41 @@ namespace Ui {
 class gl_viewer;
 }
 
+enum vertex_type {
+    CIRLCE,
+    SQUARE,
+    NOTHING
+};
+
+enum error_type {
+    IS_OK,
+    FILE_ERROR,
+    PARSER_ERROR
+};
+
 class gl_viewer : public QOpenGLWidget {
   Q_OBJECT
 
  public:
   gl_viewer(QWidget *parent = nullptr);
+
   QString filename;
-  QColor background_color;
   obj_data total_data;
+
+  double vertex_depth;
+  double edge_depth;
+
+  bool is_projection_ortho; //вид проекции - по умолчанию орто
+  bool is_edge_solid;  // тип отображения ребер - по умолчанию - сплошной
+  enum vertex_type vert_type;
+
+  QColor background_color;
+  QColor vertex_color;
+  QColor edge_color;
+
 
 
  private:
-  void initializeGL();
   void resizeGL(int w, int h);
   void paintGL();
 

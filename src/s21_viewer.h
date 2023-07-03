@@ -18,6 +18,7 @@
 // for qt
 #define WIDTH 1000
 #define HEIGHT 900
+#define DEPTH 1
 
 
 #include <ctype.h>
