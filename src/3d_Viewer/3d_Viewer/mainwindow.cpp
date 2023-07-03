@@ -118,7 +118,7 @@ void MainWindow::load_settings() {
 
 void MainWindow::on_button_pick_file_clicked()
 {
-    QString filename_outside = QFileDialog::getOpenFileName(this, "Выбирай!", "./models/", "(*.obj");
+    QString filename_outside = QFileDialog::getOpenFileName(this, "Choooose", "./models/", "Object files (*.obj)");
     QByteArray file_name_bytes = filename_outside.toUtf8();
     const char* file_name_cstr = file_name_bytes.constData();
 
@@ -126,7 +126,12 @@ void MainWindow::on_button_pick_file_clicked()
     ui->viewer_gl_widget->filename = filename_outside;
 
     if (start(file_name_cstr, &ui->viewer_gl_widget->total_data) == 1) {
-
+        QStringList parts = filename_outside.split("/");
+        QString lastBit = parts.at(parts.size() - 1);
+        ui->label_name_output->setText(lastBit);
+        ui->label_vertex->setText(QString::number(ui->viewer_gl_widget->total_data.number_vertex));
+        ui->label_edge->setText(QString::number(ui->viewer_gl_widget->total_data.number_polygons));
+        ui->viewer_gl_widget->update();
     } else {
         QMessageBox::warning(this, tr("Save Error"), tr("Некорректный файл"));
     }
@@ -160,11 +165,19 @@ void MainWindow::do_rotate(){
 }
 
 void MainWindow::set_color_edge() {
-
+    QColor edge_color = QColorDialog::getColor(Qt::white, this, "Выберите цвет отображения ребер");
+    if (edge_color.isValid()) {
+      ui->viewer_gl_widget->edge_color = edge_color;
+    }
+    ui->viewer_gl_widget->update();
 }
 
 void MainWindow::set_color_vertex(){
-
+    QColor vertex_color = QColorDialog::getColor(Qt::white, this, "Выберите цвет отображения вершин");
+    if (vertex_color.isValid()) {
+      ui->viewer_gl_widget->vertex_color = vertex_color;
+    }
+    ui->viewer_gl_widget->update();
 }
 
 void MainWindow::do_extra_changes(){
