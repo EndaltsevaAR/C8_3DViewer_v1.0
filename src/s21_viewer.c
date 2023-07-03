@@ -425,6 +425,10 @@ void free_results(obj_data *total_data) {
 int affin_operation(coord_matrix *coordMatrix, double diffX, double diffY,
                     double diffZ, int type) {
     int status = OK;
+    double scale_coeff = calculate_scale_coefficient(coordMatrix->extrems);
+    diffX *= scale_coeff;
+    diffY *= scale_coeff;
+    diffZ *= scale_coeff;
     coord_matrix affin_matrix = {0};
     switch (type) {
         case 1:  // перемещение

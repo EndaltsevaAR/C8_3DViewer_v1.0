@@ -2,6 +2,14 @@
 #include "ui_mainwindow.h"
 
 int start(const char *file_name, obj_data *total_data);
+int move_coordinate(coord_matrix *coordMatrix, double diffX, double diffY,
+                    double diffZ);
+int scale_coordinate(coord_matrix *coordMatrix, double diffX, double diffY,
+                     double diffZ);
+int rotate_X(coord_matrix *coordMatrix, double angleX);
+int rotate_Y(coord_matrix *coordMatrix, double angleY);
+int rotate_Z(coord_matrix *coordMatrix, double angleZ);
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,7 +38,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::set_start_information() {
     x_move_in = 0, y_move_in = 0, z_move_in = 0;
-    x_rotate_in = 0, y_rotate_in = 0, z_rotate_z = 0;
+    x_rotate_in = 0, y_rotate_in = 0, z_rotate_in = 0;
     x_scale_in = 0, y_scale_in = 0, z_scale_in = 0;
 
     ui->radio_projection_parallel->setChecked(true);
@@ -126,15 +134,29 @@ void MainWindow::on_button_pick_file_clicked()
 }
 
 void MainWindow::do_move() {
-
+    x_move_in = ui->line_move_x->text().toDouble();
+    y_move_in = ui->line_move_y->text().toDouble();
+    z_move_in = ui->line_move_z->text().toDouble();
+    move_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_move_in, y_move_in, z_move_in);
+    ui->viewer_gl_widget->update();
 }
 
 void MainWindow::do_scale() {
-
+    x_scale_in = ui->line_scale_x->text().toDouble();
+    y_scale_in = ui->line_scale_y->text().toDouble();
+    z_scale_in = ui->line_scale_z->text().toDouble();
+    scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_scale_in, y_scale_in, z_scale_in);
+    ui->viewer_gl_widget->update();
 }
 
 void MainWindow::do_rotate(){
-
+    x_rotate_in = ui->line_rotate_x->text().toDouble();
+    y_rotate_in = ui->line_rotate_y->text().toDouble();
+    z_rotate_in = ui->line_rotate_z->text().toDouble();
+    rotate_X(&ui->viewer_gl_widget->total_data.coordMatrix, x_rotate_in);
+    rotate_Y(&ui->viewer_gl_widget->total_data.coordMatrix, y_rotate_in);
+    rotate_Z(&ui->viewer_gl_widget->total_data.coordMatrix, z_rotate_in);
+    ui->viewer_gl_widget->update();
 }
 
 void MainWindow::set_color_edge() {
@@ -146,5 +168,32 @@ void MainWindow::set_color_vertex(){
 }
 
 void MainWindow::do_extra_changes(){
+    // обработка проекции
+    if(ui->radio_projection_central->isChecked()) {
+        ui->viewer_gl_widget->is_projection_ortho = false;
+    } else {
+        ui->viewer_gl_widget->is_projection_ortho = true;
+    }
 
+    // обработка ребер
+    if (ui->radio_edge_solid->isChecked()) {
+        ui->viewer_gl_widget->is_edge_solid = true;
+    } else {
+        ui->viewer_gl_widget->is_edge_solid = false;
+    }
+    ui->viewer_gl_widget->edge_depth = ui->line_edge_depth->text().toDouble();
+
+    // обработка вершин
+    if (ui->radio_vertex_circle->isChecked()) {
+        ui->viewer_gl_widget->vert_type = CIRLCE;
+    } else if (ui->radio_vertex_square->isChecked()) {
+        ui->viewer_gl_widget->vert_type = SQUARE;
+    } else {
+        ui->viewer_gl_widget->vert_type = NOTHING;
+    }
+    ui->viewer_gl_widget->vertex_depth = ui->line_vertex_depth->text().toDouble();
+
+    // обработка смены цветов будут обработаны отдельно в соответствующих функциях
+
+    ui->viewer_gl_widget->update();
 }

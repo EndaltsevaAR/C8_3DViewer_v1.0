@@ -24,7 +24,7 @@ public:
     ~MainWindow();
 
     double x_move_in, y_move_in, z_move_in;
-    double x_rotate_in, y_rotate_in, z_rotate_z;
+    double x_rotate_in, y_rotate_in, z_rotate_in;
     double x_scale_in, y_scale_in, z_scale_in;
 
    void set_start_information();
