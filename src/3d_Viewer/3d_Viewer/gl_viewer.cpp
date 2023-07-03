@@ -30,5 +30,5 @@ void gl_viewer::resizeGL(int w, int h) {
 
 void gl_viewer::initializeGL() {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    f->glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    f->glClearColor(0.0f, 1.0f, 0.8f, 1.0f);
 }
