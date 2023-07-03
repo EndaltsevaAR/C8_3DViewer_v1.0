@@ -9,14 +9,22 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     set_start_information();
-    load_settings();
+//    load_settings();
+
+    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_move()));
+    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_scale()));
+    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_rotate()));
+    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(set_color_edge()));
+    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(set_color_vertex()));
+    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_extra_changes()));
+
 
 }
 
 MainWindow::~MainWindow()
 {
     ui->viewer_gl_widget->destroy_viewer();
-    save_settings();
+ //   save_settings();
     delete ui;
 }
 
@@ -117,3 +125,26 @@ void MainWindow::on_button_pick_file_clicked()
 
 }
 
+void MainWindow::do_move() {
+
+}
+
+void MainWindow::do_scale() {
+
+}
+
+void MainWindow::do_rotate(){
+
+}
+
+void MainWindow::set_color_edge() {
+
+}
+
+void MainWindow::set_color_vertex(){
+
+}
+
+void MainWindow::do_extra_changes(){
+
+}
