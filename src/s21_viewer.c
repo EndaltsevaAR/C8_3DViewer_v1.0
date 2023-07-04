@@ -1,13 +1,13 @@
 #include "s21_viewer.h"
 #include <stdlib.h>
 
-
+/*
 int main() {
     char file_name[] = "simple_test_1_spaces.obj";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
 }
-
+*/
 int parsing_process_for_tests(const char *file_name) {
     int is_ok = OK;
     obj_data total_data = {0};  // создание итоговой структуры
@@ -24,7 +24,6 @@ int parsing_process_for_tests(const char *file_name) {
 int start(const char *file_name, obj_data *total_data) {
     int is_ok = OK;
     is_ok = parse_file(file_name, total_data);
-    print_data(*total_data);
     if (is_ok) {
         is_ok = check_polygons(
                 total_data);  // проверка, чтобы каждое значение вершины в полигонах
@@ -167,7 +166,10 @@ int fill_matrixes(obj_data *total_data, const char *file_name) {
                 ++vertex_i;
             } else if (line[0] == 'f' && line[1] == ' ') {
                 is_ok = parsePolygon(line, &total_data->polygons[polygon_i], polygon_i);
-
+                if (!is_ok) {
+                    free_polygons(total_data, polygon_i);
+                }
+                polygon_i += 1;
             }
         }
         fclose(file);

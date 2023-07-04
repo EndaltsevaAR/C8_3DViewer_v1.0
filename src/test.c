@@ -267,7 +267,7 @@ START_TEST(s21_move_xyz_m10_10) {
             print_data(total_data);
             ck_assert_int_eq(is_ok, OK);
             for (unsigned int i = 1; i < total_data.number_vertex; ++i) {
-                for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
+                for (unsigned int j = 0; j < NUMBER_COORD_XYZ; ++j) {
                     ck_assert_ldouble_eq_tol(total_data.coordMatrix.coordinates[i][j],
                                              test_result.coordinates[i][j], s21_EPS);
                 }
@@ -289,7 +289,7 @@ START_TEST(s21_scale_xyz_m11_11) {
         char file_name[] = "test_files_obj/simple_cub.obj";
         obj_data total_data = {0};  //создание итоговой структуры
         parse_file(file_name, &total_data);
-
+        print_data(total_data);
         coord_matrix test_result = {0};
         init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
         for (unsigned int i = 0; i < test_result.rows; ++i) {
@@ -306,12 +306,12 @@ START_TEST(s21_scale_xyz_m11_11) {
         if (!is_ok) {
             printf("We can not do this transformation!\n");
         }
-        printf("After moving\n");
+        printf("After scaling\n");
         print_data(total_data);
 
         ck_assert_int_eq(is_ok, OK);
         for (unsigned int i = 1; i < total_data.number_vertex; ++i) {
-            for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
+            for (unsigned int j = 0; j < NUMBER_COORD_XYZ; ++j) {
                 ck_assert_ldouble_eq_tol(total_data.coordMatrix.coordinates[i][j],
                                          test_result.coordinates[i][j], s21_EPS);
             }
@@ -356,7 +356,7 @@ START_TEST(s21_rotate_X) {
 
         ck_assert_int_eq(is_ok, OK);
         for (unsigned int i = 1; i < total_data.number_vertex; ++i) {
-            for (unsigned int j = 0; j < NUMBER_COLS - 1; ++j) {
+            for (unsigned int j = 0; j < NUMBER_COORD_XYZ; ++j) {
                 ck_assert_ldouble_eq_tol(total_data.coordMatrix.coordinates[i][j],
                                          test_result.coordinates[i][j], s21_EPS);
             }
@@ -401,7 +401,7 @@ START_TEST(s21_rotate_Y) {
 
         ck_assert_int_eq(is_ok, OK);
         for (unsigned int i = 1; i < total_data.number_vertex; ++i) {
-            for (unsigned int j = 0; j < NUMBER_COLS - 1; ++j) {
+            for (unsigned int j = 0; j < NUMBER_COORD_XYZ; ++j) {
                 ck_assert_ldouble_eq_tol(total_data.coordMatrix.coordinates[i][j],
                                          test_result.coordinates[i][j], s21_EPS);
             }
@@ -446,7 +446,7 @@ START_TEST(s21_rotate_Z) {
 
         ck_assert_int_eq(is_ok, OK);
         for (unsigned int i = 1; i < total_data.number_vertex; ++i) {
-            for (unsigned int j = 0; j < NUMBER_COLS - 1; ++j) {
+            for (unsigned int j = 0; j < NUMBER_COORD_XYZ; ++j) {
                 ck_assert_ldouble_eq_tol(total_data.coordMatrix.coordinates[i][j],
                                          test_result.coordinates[i][j], s21_EPS);
             }
@@ -465,7 +465,7 @@ START_TEST(s21_move_scale_xyz_m11_11) {
         for (double diff = -11; diff <= 11; diff += 5) {
             int is_ok = OK;
             printf("Test check moving and scale for  coord by 5\n");
-            char file_name[] = "test_files_obj/parsing_process_for_tests(.obj";
+            char file_name[] = "test_files_obj/simple_test_2_spaces.obj";
             obj_data total_data = {0};  //создание итоговой структуры
             parse_file(file_name, &total_data);
 
@@ -511,7 +511,7 @@ START_TEST(s21_move_scale_xyz_m11_11) {
 
             ck_assert_int_eq(is_ok, OK);
             for (unsigned int i = 1; i < total_data.number_vertex; ++i) {
-                for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
+                for (unsigned int j = 0; j < NUMBER_COORD_XYZ; ++j) {
                     ck_assert_ldouble_eq_tol(total_data.coordMatrix.coordinates[i][j],
                                              test_result.coordinates[i][j], s21_EPS);
                 }
@@ -534,7 +534,7 @@ START_TEST(s21_scale_move_xyz_m11_11) {
             char file_name[] = "test_files_obj/simple_cub.obj";
             obj_data total_data = {0};  //создание итоговой структуры
             parse_file(file_name, &total_data);
-
+            print_data(total_data);
             coord_matrix test_result = {0};
             init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
             double coefficient = total_data.coordMatrix.scale_coefficient;
@@ -542,8 +542,8 @@ START_TEST(s21_scale_move_xyz_m11_11) {
                 for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
                     if (j == type) {
                         test_result.coordinates[i][j] =
-                                total_data.coordMatrix.coordinates[i][j] * diff +
-                                diff * coefficient;  // тест, на то, что все сдвинется именно по х на 5
+                                (total_data.coordMatrix.coordinates[i][j] + diff * coefficient) *
+                                diff;  // тест, на то, что все сдвинется именно по х на 5
                     } else {
                         test_result.coordinates[i][j] =
                                 total_data.coordMatrix.coordinates[i][j] * diff;
@@ -574,7 +574,7 @@ START_TEST(s21_scale_move_xyz_m11_11) {
 
             ck_assert_int_eq(is_ok, OK);
             for (unsigned int i = 1; i < total_data.number_vertex; ++i) {
-                for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
+                for (unsigned int j = 0; j < NUMBER_COORD_XYZ; ++j) {
                     ck_assert_ldouble_eq_tol(total_data.coordMatrix.coordinates[i][j],
                                              test_result.coordinates[i][j], s21_EPS);
                 }
@@ -620,7 +620,7 @@ END_TEST
 
 // тесты оцентровки
 START_TEST(s21_move_to_center_1) {  // перенос к центру координат
-    char file_name[] = "test_files_obj/simple_test_2_spaces.obj";
+    char file_name[] = "test_files_obj/simple_cub.obj";
     int is_ok = OK;
     obj_data total_data = {0};  // создание итоговой структуры
     is_ok = parse_file(file_name, &total_data);
@@ -646,6 +646,7 @@ START_TEST(s21_move_to_center_1) {  // перенос к центру коорд
     }
 
     ck_assert_int_eq(is_ok, OK);
+    calculate_extrems(total_data.coordMatrix, extrems); // пересчет проверки
     for (int i = 0; i < NUMBER_COORD_XYZ; ++i) { // проверяем что максимумы и минимумы фигуры зеркальны осям
         ck_assert_ldouble_eq_tol(fabs(extrems[2 * i]),
                                  fabs(extrems[2 * i + 1]), s21_EPS);
@@ -706,7 +707,7 @@ int main(void) {
     suite_add_tcase(s, s21_viewer_h);
 
     // good tests
-  //  tcase_add_test(s21_viewer_h, s21_simple_good_big_file); под него нельзя загружать файлы в гитлаб, при необходимости запустить отдельно
+    //  tcase_add_test(s21_viewer_h, s21_simple_good_man; под него нельзя загружать файлы в гитлаб, при необходимости запустить отдельно
     tcase_add_test(s21_viewer_h, s21_simple_good_test_file_2_spaces);
     tcase_add_test(s21_viewer_h, s21_simple_good_test_file_1_spaces);
     tcase_add_test(s21_viewer_h, s21_4_coordinates);
@@ -734,17 +735,17 @@ int main(void) {
 
     // affine test
     tcase_add_test(s21_viewer_h, s21_move_xyz_m10_10);
-      tcase_add_test(s21_viewer_h, s21_scale_xyz_m11_11);
-      tcase_add_test(s21_viewer_h, s21_rotate_X);
-      tcase_add_test(s21_viewer_h, s21_rotate_Y);
-      tcase_add_test(s21_viewer_h, s21_rotate_Z);
-      tcase_add_test(s21_viewer_h, s21_move_scale_xyz_m11_11);
-      tcase_add_test(s21_viewer_h, s21_scale_move_xyz_m11_11);
-      tcase_add_test(s21_viewer_h, s21_rotate_XYZ);
+    tcase_add_test(s21_viewer_h, s21_scale_xyz_m11_11);
+    tcase_add_test(s21_viewer_h, s21_rotate_X);
+    tcase_add_test(s21_viewer_h, s21_rotate_Y);
+    tcase_add_test(s21_viewer_h, s21_rotate_Z);
+    tcase_add_test(s21_viewer_h, s21_move_scale_xyz_m11_11);
+    tcase_add_test(s21_viewer_h, s21_scale_move_xyz_m11_11);
+    tcase_add_test(s21_viewer_h, s21_rotate_XYZ);
 
-      // тесты оцентровки
-      tcase_add_test(s21_viewer_h, s21_move_to_center_1);
-      tcase_add_test(s21_viewer_h, s21_move_to_center_cub);
+    // тесты оцентровки
+    tcase_add_test(s21_viewer_h, s21_move_to_center_1);
+    tcase_add_test(s21_viewer_h, s21_move_to_center_cub);
 
     srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_ENV);
