@@ -30,10 +30,10 @@
 
 typedef struct Coord_matrix {
     double **coordinates;
-    double extrems[6]; // для минимумов и максимумов всех координат
     unsigned int rows;  // так как в f вершины начинаются с 1, то row будет
     // number_vertex + 1 и нулевая строчка будет пустая
     unsigned int cols;  // always 3: x, y and z
+    double scale_coefficient;
 } coord_matrix;
 
 typedef struct Poligon {
@@ -50,7 +50,7 @@ typedef struct Obj_data {
 } obj_data;
 
 // общий алгоритм
-int parsing_process();
+int parsing_process_for_tests(const char *file_name);
 
 int start(const char *file_name, obj_data *total_data);
 
@@ -91,12 +91,10 @@ void free_results(obj_data *total_data);
 
 // афинные преобразования
 // перемещения
-int move_coordinate(coord_matrix *coordMatrix, double diffX, double diffY,
-                    double diffZ);
+int move_coordinate(coord_matrix *coordMatrix, double diffX, double diffY, double diffZ);
 
 // scale
-int scale_coordinate(coord_matrix *coordMatrix, double diffX, double diffY,
-                     double diffZ);
+int scale_coordinate(coord_matrix *coordMatrix, double diff);
 
 // rotate
 int rotate_X(coord_matrix *coordMatrix, double angleX);
@@ -127,12 +125,11 @@ int s21_mult_matrix(coord_matrix *A, coord_matrix *B,
 void angle_to_rad(double *angle);
 
 // оцентровка и изменение к масштабу [0;1]
-
+void calculate_extrems(coord_matrix coordMatrix, double *extrems);
 int preparation_to_init_draw(obj_data *total_data); // оцентровка и изменение масштаба к 0-1
-int move_to_center(obj_data *total_data);
+int move_to_center(obj_data *total_data, const double *extrems);
 
-int scale_0_1(obj_data *total_data);    // изменение масштаба в диапапзон [0;1]
-void recalculate_extrems(coord_matrix *coordMatrix);
+int scale_0_1(obj_data *total_data, double *extrems);    // изменение масштаба в диапапзон [0;1]
 
 double calculate_scale_coefficient(const double *extrems);
 

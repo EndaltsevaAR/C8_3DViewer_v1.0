@@ -9,6 +9,8 @@ void gl_viewer::paintGL() {
     glClearColor(background_color.redF(), background_color.greenF(),
                  background_color.blueF(), background_color.alphaF());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    char file_name[] = "../../test_files_obj/good_cat.obj";
+    start(file_name, &total_data);
     glBegin(GL_QUADS);
     glColor3d(1, 0, 0);
         for (unsigned int i = 0; i < total_data.number_polygons; i++)

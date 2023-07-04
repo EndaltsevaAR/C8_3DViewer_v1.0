@@ -1,28 +1,30 @@
 #include "s21_viewer.h"
 #include <stdlib.h>
-/*
+
+
 int main() {
-    parsing_process();
-    return 0;
+    char file_name[] = "simple_test_1_spaces.obj";
+    int status = parsing_process_for_tests(file_name);
+    printf("\n");
 }
-*/
-int parsing_process() {
+
+int parsing_process_for_tests(const char *file_name) {
     int is_ok = OK;
-    char file_name[] = "simple_test_2_spaces.obj";  // строка для дебага
     obj_data total_data = {0};  // создание итоговой структуры
 
     is_ok = start(file_name, &total_data);
-
     if (is_ok) {
         free_results(&total_data);
     }
+
+    return is_ok;
 
 }
 
 int start(const char *file_name, obj_data *total_data) {
     int is_ok = OK;
     is_ok = parse_file(file_name, total_data);
-
+    print_data(*total_data);
     if (is_ok) {
         is_ok = check_polygons(
                 total_data);  // проверка, чтобы каждое значение вершины в полигонах
@@ -40,7 +42,7 @@ int start(const char *file_name, obj_data *total_data) {
     }
 
     if (is_ok) {
-        printf("After center\n");
+        printf("After init_draw\n");
         print_data(*total_data);
     }
 
@@ -52,7 +54,6 @@ int parse_file(const char *file_name, obj_data *total_data) {
     int is_ok = OK;
     is_ok = find_info_for_init(&number_vertexes, &number_polygons,
                                file_name);  // первое прочтение файла
-
     if (is_ok) {
         coord_matrix coordMatrix = {0};  // инициализация матрицы координат вершин
         is_ok = init_coord_matrix(&coordMatrix, number_vertexes,
@@ -114,6 +115,7 @@ int find_info_for_init(unsigned int *number_vertexes,
 int init_coord_matrix(coord_matrix *coordMatrix, unsigned int number_vertexes,
                       unsigned int number_for_cols) {
     int is_ok = OK;
+    coordMatrix->scale_coefficient = 1.0;
     coordMatrix->rows =
             number_vertexes + 1;  // нулевая строчка использоваться не будет
     coordMatrix->cols =
@@ -149,7 +151,6 @@ int fill_matrixes(obj_data *total_data, const char *file_name) {
         printf("Program can not open file second time.\n");
         is_ok = FAIL;
     }
-
     if (is_ok) {
         fseek(file, 0, SEEK_SET);  // открывает файл второй раз с начала
         char line[MAX_LENGTH] = {0};  // Буфер для хранения строки
@@ -159,15 +160,14 @@ int fill_matrixes(obj_data *total_data, const char *file_name) {
         while (fgets(line, sizeof(line), file) &&
                is_ok) {  // Считываем строку из файла
             line[strcspn(line, "\n")] = '\0';
+            line[strcspn(line, "\t")] = '\0';
+            line[strcspn(line, "\r")] = '\0';
             if (line[0] == 'v' && line[1] == ' ') {
                 is_ok = parseVertexes(line, &total_data->coordMatrix, vertex_i);
                 ++vertex_i;
             } else if (line[0] == 'f' && line[1] == ' ') {
                 is_ok = parsePolygon(line, &total_data->polygons[polygon_i], polygon_i);
-                if (!is_ok) {
-                    free_polygons(total_data, polygon_i);
-                }
-                polygon_i += 1;
+
             }
         }
         fclose(file);
@@ -194,17 +194,6 @@ int parseVertexes(char *line, coord_matrix *coordMatrix, unsigned int vertex_i) 
                     is_ok = FAIL;
                 } else if (i >= 0) {
                     coordinates[i] = atof(token);  //  проверкой на число - в is_string_number
-                    if (i < NUMBER_COORD_XYZ) { // рассматриваем только координаты x,y,z
-                        // заполнение и обновление массива минимумов и максимумов
-                        if (vertex_i == 1) { // первоначальная инициализация значениями мин и макс в первой точке
-                            coordMatrix->extrems[i * 2] = coordinates[i]; // минимум
-                            coordMatrix->extrems[i * 2 + 1] = coordinates[i]; // максимум
-                        } else { // работа с остальными точками
-                            coordMatrix->extrems[i * 2] = min_two_doubles(coordMatrix->extrems[i * 2], coordinates[i]);
-                            coordMatrix->extrems[i * 2 + 1] = max_two_doubles(coordMatrix->extrems[i * 2 + 1],
-                                                                              coordinates[i]);
-                        }
-                    }
                     ++i;
                 }
             }
@@ -299,11 +288,8 @@ void print_data(obj_data data) {
         }
         printf("\n");
     }
-    printf("Extrems are \n");
-    for (int i = 0; i < 6; ++i) {
-        printf("%lf ", data.coordMatrix.extrems[i]);
-    }
-    printf("\n");
+
+    printf("end print\n");
 }
 
 int get_int(const char *token, unsigned int *number_str) {
@@ -425,10 +411,6 @@ void free_results(obj_data *total_data) {
 int affin_operation(coord_matrix *coordMatrix, double diffX, double diffY,
                     double diffZ, int type) {
     int status = OK;
-    double scale_coeff = calculate_scale_coefficient(coordMatrix->extrems);
-    diffX *= scale_coeff;
-    diffY *= scale_coeff;
-    diffZ *= scale_coeff;
     coord_matrix affin_matrix = {0};
     switch (type) {
         case 1:  // перемещение
@@ -466,22 +448,23 @@ int affin_operation(coord_matrix *coordMatrix, double diffX, double diffY,
                 free_coord_matrix(&result_matrix);
             }
         }
-        recalculate_extrems(coordMatrix);
     }
     free_coord_matrix(&affin_matrix);
     return status;
 }
 
 // перемещения
-int move_coordinate(coord_matrix *coordMatrix, double diffX, double diffY,
-                    double diffZ) {
+int move_coordinate(coord_matrix *coordMatrix, double diffX, double diffY, double diffZ) {
+    diffX *= coordMatrix->scale_coefficient;
+    diffY *= coordMatrix->scale_coefficient;
+    diffZ *= coordMatrix->scale_coefficient;
     return affin_operation(coordMatrix, diffX, diffY, diffZ, 1);
 }
 
 // scale
-int scale_coordinate(coord_matrix *coordMatrix, double diffX, double diffY,
-                     double diffZ) {  // проверить ввод 0 на фронте
-    return affin_operation(coordMatrix, diffX, diffY, diffZ, 2);
+int scale_coordinate(coord_matrix *coordMatrix, double diff) {  // проверить ввод 0 на фронте
+    coordMatrix->scale_coefficient *= diff;
+    return affin_operation(coordMatrix, diff, diff, diff, 2);
 }
 
 // rotate X
@@ -623,41 +606,44 @@ int init_vector_matrix(coord_matrix *vector_matrix, coord_matrix *init_matrix,
 
 int preparation_to_init_draw(obj_data *total_data) {
     int is_ok = OK;
-    is_ok = move_to_center(total_data); // оцентровка
+    double extrems[6] = {0};
+    calculate_extrems(total_data->coordMatrix, extrems);
+    is_ok = move_to_center(total_data, extrems); // оцентровка
     if (is_ok) {
-        is_ok = scale_0_1(total_data); // изменение масштабирования
+        is_ok = scale_0_1(total_data, extrems); // изменение масштабирования
     }
     return is_ok;
 }
 
-int move_to_center(obj_data *total_data) {    // оцентровка
+void calculate_extrems(coord_matrix coordMatrix, double *extrems) {
+    for (int i = 0; i < NUMBER_COORD_XYZ; ++i) {
+        extrems[i *2] = coordMatrix.coordinates[1][i]; // нулевая строчка не используется, поэтому инициализация идет с 1 строчки
+        extrems[i * 2 + 1] = coordMatrix.coordinates[1][i];
+    }
+    for (int i = 2; i < coordMatrix.rows; ++i) {
+        for (int j = 0; j < NUMBER_COORD_XYZ; ++j) {
+            extrems[j * 2] = min_two_doubles(extrems[j * 2], coordMatrix.coordinates[i][j]);
+            extrems[j * 2 + 1] = max_two_doubles(extrems[j * 2 + 1],
+                                                              coordMatrix.coordinates[i][j]);
+        }
+    }
+}
+
+int move_to_center(obj_data *total_data, const double *extrems) {    // оцентровка
     double shift_values[NUMBER_COORD_XYZ] = {
             0}; // поиск на сколько сдвигать каждую точку по каждой координате, чтобы фигура была оцентрирована
     for (int i = 0; i < NUMBER_COORD_XYZ; ++i) {
-        shift_values[i] = total_data->coordMatrix.extrems[i * 2] + (total_data->coordMatrix.extrems[i * 2 + 1] - total_data->coordMatrix.extrems[i * 2]) / 2; // формула: min + (max - min)/2
+        shift_values[i] = extrems[i * 2] +
+                          (extrems[i * 2 + 1] - extrems[i * 2]) /
+                          2; // формула: min + (max - min)/2
     }
     return move_coordinate(&total_data->coordMatrix, -shift_values[0], -shift_values[1], -shift_values[2]);
 }
 
-int scale_0_1(obj_data *total_data) {    // изменение масштаба в диапапзон [0;1]
-    double scale_coefficient = calculate_scale_coefficient(total_data->coordMatrix.extrems);
-    return scale_coordinate(&total_data->coordMatrix, scale_coefficient, scale_coefficient, scale_coefficient);
+int scale_0_1(obj_data *total_data, double *extrems) {    // изменение масштаба в диапапзон [0;1]
+    return scale_coordinate(&total_data->coordMatrix, calculate_scale_coefficient(extrems));
 }
 
-void recalculate_extrems(coord_matrix *coordMatrix) {
-    for (int i = 0; i < NUMBER_COORD_XYZ; ++i) {
-        coordMatrix->extrems[i *
-                             2] = coordMatrix->coordinates[1][i]; // нулевая строчка не используется, поэтому инициализация идет с 1 строчки
-        coordMatrix->extrems[i * 2 + 1] = coordMatrix->coordinates[1][i];
-    }
-    for (int i = 2; i < coordMatrix->rows; ++i) {
-        for (int j = 0; j < NUMBER_COORD_XYZ; ++j) {
-            coordMatrix->extrems[j * 2] = min_two_doubles(coordMatrix->extrems[j * 2], coordMatrix->coordinates[i][j]);
-            coordMatrix->extrems[j * 2 + 1] = max_two_doubles(coordMatrix->extrems[j * 2 + 1],
-                                                              coordMatrix->coordinates[i][j]);
-        }
-    }
-}
 
 double calculate_scale_coefficient(const double *extrems) {
     double deltas[NUMBER_COORD_XYZ] = {0};
