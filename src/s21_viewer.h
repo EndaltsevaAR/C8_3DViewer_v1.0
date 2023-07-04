@@ -84,9 +84,7 @@ int check_polygons(obj_data *total_data);
 // функции очистки памяти
 
 void free_coord_matrix(coord_matrix *coordMatrix);
-
 void free_polygons(obj_data *total_data, unsigned int crash_number);
-
 void free_results(obj_data *total_data);
 
 // афинные преобразования
@@ -98,9 +96,7 @@ int scale_coordinate(coord_matrix *coordMatrix, double diff);
 
 // rotate
 int rotate_X(coord_matrix *coordMatrix, double angleX);
-
 int rotate_Y(coord_matrix *coordMatrix, double angleY);
-
 int rotate_Z(coord_matrix *coordMatrix, double angleZ);
 
 // работа с матрицами
@@ -122,17 +118,15 @@ int init_vector_matrix(coord_matrix *vector_matrix, coord_matrix *init_matrix,
 int s21_mult_matrix(coord_matrix *A, coord_matrix *B,
                     coord_matrix *result);  // Умножение двух матриц
 
-void angle_to_rad(double *angle);
 
 // оцентровка и изменение к масштабу [0;1]
 void calculate_extrems(coord_matrix coordMatrix, double *extrems);
 int preparation_to_init_draw(obj_data *total_data); // оцентровка и изменение масштаба к 0-1
 int move_to_center(obj_data *total_data, const double *extrems);
-
 int scale_0_1(obj_data *total_data, double *extrems);    // изменение масштаба в диапапзон [0;1]
-
 double calculate_scale_coefficient(const double *extrems);
-
 double max_delta_coordinates(const double *deltas);
+
+int get_edges_number(polygon *polygons, unsigned int number_polygons);
 
 #endif  // S21_3D_VIEWER_H

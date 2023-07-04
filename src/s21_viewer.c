@@ -665,3 +665,24 @@ double max_delta_coordinates(const double *deltas) {
     }
     return max;
 }
+
+int get_edges_number(polygon *polygons, unsigned int number_polygons) {
+    int answer = 0;
+    int size = 2;
+    int **edges = (int**)calloc(size, sizeof(int*));
+    for (int i = 0; i < 2; ++i) {
+        edges[i] = (int*)calloc(2, sizeof(int));
+    }
+
+    for (unsigned int i = 0; i < number_polygons; ++i) {
+        for (int j = 0; j < polygons[i].number_vertexes - 1; ++j) {
+            
+        }
+    }
+
+    for (int i = 0; i < size; ++i) {
+        free(edges[i]);
+    }
+    free(edges);
+    return answer;
+}
