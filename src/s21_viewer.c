@@ -36,15 +36,15 @@ int start(const char *file_name, obj_data *total_data) {
         }
     }
     if (is_ok) {
-        print_data(*total_data); // функция для информативности в тестах
+   //     print_data(*total_data); // функция для информативности в тестах
         is_ok = preparation_to_init_draw(total_data); // оцентровка и изменение масштаба к 0-1
     }
-
+/*
     if (is_ok) {
         printf("After init_draw\n");
         print_data(*total_data);
     }
-
+*/
     return is_ok;
 }
 

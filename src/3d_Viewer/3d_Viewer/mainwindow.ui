@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>3D_Viewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="gl_viewer" name="viewer_gl_widget">
@@ -24,12 +24,12 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_do_extra">
+   <widget class="QPushButton" name="button_do_extra_figure">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>730</y>
-      <width>201</width>
+      <x>100</x>
+      <y>820</y>
+      <width>241</width>
       <height>31</height>
      </rect>
     </property>
@@ -39,16 +39,16 @@
 }</string>
     </property>
     <property name="text">
-     <string>Применить</string>
+     <string>Применить настройки фигуры</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_reset_extra">
+   <widget class="QPushButton" name="button_reset_extra_figure">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>780</y>
-      <width>201</width>
-      <height>41</height>
+      <x>370</x>
+      <y>820</y>
+      <width>221</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -57,16 +57,16 @@
 }</string>
     </property>
     <property name="text">
-     <string>Сбросить все настройки</string>
+     <string>Сбросить настройки фигуры</string>
     </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>720</y>
+      <y>710</y>
       <width>321</width>
-      <height>131</height>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_edge">
@@ -132,12 +132,15 @@
     <property name="geometry">
      <rect>
       <x>380</x>
-      <y>720</y>
+      <y>710</y>
       <width>331</width>
-      <height>131</height>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_vertex">
+     <property name="verticalSpacing">
+      <number>20</number>
+     </property>
      <item row="1" column="0" rowspan="2">
       <layout class="QVBoxLayout" name="verticalLayout_vertex">
        <item>
@@ -216,7 +219,7 @@
      <string>Выбрать файл типа .obj</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -593,6 +596,42 @@ background-color:#FFFFFF;
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="button_reset_extra_system">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>780</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+     background-color: #b40000;
+}</string>
+    </property>
+    <property name="text">
+     <string>Сбросить настройки системы</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_do_extra_system">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>730</y>
+      <width>241</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+     background-color: #3cbaa2;
+}</string>
+    </property>
+    <property name="text">
+     <string>Применить настройки системы</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

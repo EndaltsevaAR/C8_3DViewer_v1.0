@@ -26,7 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->button_edge_color, SIGNAL(clicked()), this, SLOT(set_color_edge()));
     connect(ui->button_vertex_color, SIGNAL(clicked()), this, SLOT(set_color_vertex()));
     connect(ui->button_background_color, SIGNAL(clicked()), this, SLOT(set_color_background()));
-    connect(ui->button_do_extra, SIGNAL(clicked()), this, SLOT(do_extra_changes()));
+    connect(ui->button_do_extra_figure, SIGNAL(clicked()), this, SLOT(do_extra_figure_changes()));
+    connect(ui->button_reset_extra_figure, SIGNAL(clicked()), this, SLOT(do_reset_figure_changes()));
+    connect(ui->button_do_extra_system, SIGNAL(clicked()), this, SLOT(do_extra_system_changes()));
+    connect(ui->button_reset_extra_system, SIGNAL(clicked()), this, SLOT(do_reset_system_changes()));
 }
 
 MainWindow::~MainWindow()
@@ -51,15 +54,8 @@ void MainWindow::set_start_affin() {
     ui->line_scale_smaller->setText("");
 }
 
-
-void MainWindow::set_start_information() {
+void MainWindow::set_default_settings_figure() {
     set_start_affin();
-
-    ui->radio_projection_parallel->setChecked(true);
-    ui->viewer_gl_widget->is_projection_ortho = false;
-
-    ui->radio_edge_solid->setChecked(true);
-    ui->viewer_gl_widget->is_edge_solid = true;
 
     ui->radio_vertex_nothing->setChecked(true);
     ui->viewer_gl_widget->vert_type = NOTHING;
@@ -68,8 +64,23 @@ void MainWindow::set_start_information() {
     ui->viewer_gl_widget->edge_depth = DEPTH;
 
     ui->viewer_gl_widget->edge_color = Qt::white;
+     ui->viewer_gl_widget->vertex_color = Qt::black;
+}
+
+void MainWindow::set_default_settings_system() {
+    ui->radio_projection_parallel->setChecked(true);
+    ui->viewer_gl_widget->is_projection_ortho = false;
+
+    ui->radio_edge_solid->setChecked(true);
+    ui->viewer_gl_widget->is_edge_solid = true;
+
     ui->viewer_gl_widget->background_color = Qt::yellow;
-    ui->viewer_gl_widget->vertex_color = Qt::black;
+}
+
+
+void MainWindow::set_start_information() {
+    set_default_settings_figure();
+    set_default_settings_system();
 }
 
 void MainWindow::save_settings() {
@@ -212,36 +223,28 @@ void MainWindow::do_rotate(){
 
 void MainWindow::set_color_edge() {
     QColor edge_color = QColorDialog::getColor(Qt::white, this, "Выберите цвет отображения ребер");
-    if (edge_color.isValid()) {
+    if (edge_color.isValid() && edge_color != ui->viewer_gl_widget->background_color) {
       ui->viewer_gl_widget->edge_color = edge_color;
     }
-    ui->viewer_gl_widget->update();
+
 }
 
 void MainWindow::set_color_vertex(){
     QColor vertex_color = QColorDialog::getColor(Qt::white, this, "Выберите цвет отображения вершин");
-    if (vertex_color.isValid()) {
+    if (vertex_color.isValid() && vertex_color != ui->viewer_gl_widget->background_color) {
       ui->viewer_gl_widget->vertex_color = vertex_color;
     }
-    ui->viewer_gl_widget->update();
+
 }
 
 void MainWindow::set_color_background(){
     QColor background_color = QColorDialog::getColor(Qt::white, this, "Выберите цвет отображения вершин");
-    if (background_color.isValid()) {
+    if (background_color.isValid() && background_color != ui->viewer_gl_widget->edge_color) {
       ui->viewer_gl_widget->background_color = background_color;
     }
-    ui->viewer_gl_widget->update();
 }
 
-void MainWindow::do_extra_changes(){
-    // обработка проекции
-    if(ui->radio_projection_central->isChecked()) {
-        ui->viewer_gl_widget->is_projection_ortho = false;
-    } else {
-        ui->viewer_gl_widget->is_projection_ortho = true;
-    }
-
+void MainWindow::do_extra_figure_changes(){
     // обработка ребер
     if (ui->radio_edge_solid->isChecked()) {
         ui->viewer_gl_widget->is_edge_solid = true;
@@ -260,7 +263,26 @@ void MainWindow::do_extra_changes(){
     }
     ui->viewer_gl_widget->vertex_depth = ui->line_vertex_depth->text().toDouble();
 
-    // обработка смены цветов будут обработаны отдельно в соответствующих функциях
+    ui->viewer_gl_widget->update();
+}
 
+
+void MainWindow:: do_reset_figure_changes() {
+    set_default_settings_figure();
+    ui->viewer_gl_widget->update();
+}
+
+void MainWindow:: do_extra_system_changes() {
+    // обработка проекции
+    if(ui->radio_projection_central->isChecked()) {
+        ui->viewer_gl_widget->is_projection_ortho = false;
+    } else {
+        ui->viewer_gl_widget->is_projection_ortho = true;
+    }
+    ui->viewer_gl_widget->update();
+}
+
+void MainWindow:: do_reset_system_changes() {
+    set_default_settings_system();
     ui->viewer_gl_widget->update();
 }

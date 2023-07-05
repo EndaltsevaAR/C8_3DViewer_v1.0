@@ -28,7 +28,10 @@ public:
     double scale_bigger, scale_smaller;
 
    void set_start_information();
+   void set_default_settings_figure();
+   void set_default_settings_system();
    void set_start_affin();
+
    void save_settings();
    void load_settings();
 
@@ -41,7 +44,10 @@ private slots:
     void set_color_edge();
     void set_color_vertex();
     void set_color_background();
-    void do_extra_changes();
+    void do_extra_figure_changes();
+    void do_reset_figure_changes();
+    void do_extra_system_changes();
+    void do_reset_system_changes();
 
 private:
     Ui::MainWindow *ui;
