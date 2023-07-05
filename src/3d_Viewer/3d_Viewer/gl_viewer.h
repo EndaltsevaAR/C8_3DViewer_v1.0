@@ -55,6 +55,8 @@ class gl_viewer : public QOpenGLWidget {
  private:
   void resizeGL(int w, int h);
   void paintGL();
+  void paint_object();
+  void paint_vertex();
 
   Ui::gl_viewer *ui;
 
