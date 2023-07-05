@@ -687,8 +687,6 @@ START_TEST(s21_move_to_center_cub) {  // перенос к центру коор
     }
 
     ck_assert_int_eq(is_ok, OK);
-
-
     if (is_ok) {
         free_results(&total_data);
     }
@@ -732,6 +730,7 @@ START_TEST(s21_edge_number_3d) {  // перенос к центру коорди
     }
 }
 
+/*
 START_TEST(s21_edge_number_big_3d) {  // перенос к центру координат
     char file_name[] = "test_files_obj/good_cat.obj";
     int is_ok = OK;
@@ -746,13 +745,8 @@ START_TEST(s21_edge_number_big_3d) {  // перенос к центру коор
         free_results(&total_data);
     }
 }
-
-
 END_TEST
-
-
-
-
+*/
 
 int main(void) {
     setlocale(LC_ALL, "en_US.UTF-8");

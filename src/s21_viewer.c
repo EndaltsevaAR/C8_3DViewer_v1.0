@@ -96,6 +96,8 @@ int find_info_for_init(unsigned int *number_vertexes,
         char line[MAX_LENGTH];  // Буфер для хранения строки
         while (fgets(line, sizeof(line), file)) {  // Считываем строку из файла
             line[strcspn(line, "\n")] = '\0';
+            line[strcspn(line, "\t")] = '\0';
+            line[strcspn(line, "\r")] = '\0';
             if (line[0] == 'v' && line[1] == ' ') { // vertex
                 *number_vertexes += 1;
             } else if (line[0] == 'f' && line[1] == ' ') { //polygon
