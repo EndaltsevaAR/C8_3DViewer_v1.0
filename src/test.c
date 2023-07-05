@@ -732,6 +732,22 @@ START_TEST(s21_edge_number_3d) {  // перенос к центру коорди
     }
 }
 
+START_TEST(s21_edge_number_big_3d) {  // перенос к центру координат
+    char file_name[] = "test_files_obj/good_cat.obj";
+    int is_ok = OK;
+    obj_data total_data = {0};  // создание итоговой структуры
+    is_ok = parse_file(file_name, &total_data);
+
+    int edge_number = get_edges_number(total_data.polygons, total_data.number_polygons);
+    ck_assert_int_eq(is_ok, OK);
+    ck_assert_int_eq(edge_number, 3199);
+
+    if (is_ok) {
+        free_results(&total_data);
+    }
+}
+
+
 END_TEST
 
 
@@ -791,6 +807,7 @@ int main(void) {
     // тест количества граней
     tcase_add_test(s21_viewer_h, s21_edge_number);
     tcase_add_test(s21_viewer_h, s21_edge_number_3d);
+  //  tcase_add_test(s21_viewer_h, s21_edge_number_big_3d); тест для отработки больших фигур, его объект нельзя грузить в гитлаб, придется вызывать вручную
 
     srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_ENV);

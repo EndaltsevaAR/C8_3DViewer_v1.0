@@ -441,8 +441,7 @@ int affin_operation(coord_matrix *coordMatrix, double diffX, double diffY,
             if (status == OK) {
                 status = s21_mult_matrix(&affin_matrix, &vector_matrix, &result_matrix);
             }
-            if (status ==
-                OK) {  // в случае фейла фришить не надо, так как free зашит в init
+            if (status == OK) {
                 for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
                     coordMatrix->coordinates[i][j] = result_matrix.coordinates[j][0];
                 }
@@ -450,8 +449,9 @@ int affin_operation(coord_matrix *coordMatrix, double diffX, double diffY,
                 free_coord_matrix(&result_matrix);
             }
         }
+        free_coord_matrix(&affin_matrix);
     }
-    free_coord_matrix(&affin_matrix);
+
     return status;
 }
 
@@ -530,8 +530,6 @@ int init_move_matrix(coord_matrix *affin_matrix, double diffX, double diffY,
         affin_matrix->coordinates[0][3] = diffX;
         affin_matrix->coordinates[1][3] = diffY;
         affin_matrix->coordinates[2][3] = diffZ;
-    } else {
-        is_ok = AFFIN_FAIL; // все ошибки аффинных преобразований не должны ломать систему
     }
     return is_ok;
 }
@@ -545,8 +543,6 @@ int init_scale_matrix(coord_matrix *affin_matrix, double diffX, double diffY,
         affin_matrix->coordinates[1][1] = diffY;
         affin_matrix->coordinates[2][2] = diffZ;
         affin_matrix->coordinates[3][3] = 1;
-    } else {
-        is_ok = AFFIN_FAIL; // все ошибки аффинных преобразований не должны ломать систему
     }
     return is_ok;
 }
