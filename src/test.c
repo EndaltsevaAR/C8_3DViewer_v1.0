@@ -697,6 +697,47 @@ START_TEST(s21_move_to_center_cub) {  // перенос к центру коор
 END_TEST
 
 
+// тест количества граней
+
+
+START_TEST(s21_edge_number) {  // перенос к центру координат
+    char file_name[] = "test_files_obj/simple_cub.obj";
+    int is_ok = OK;
+    obj_data total_data = {0};  // создание итоговой структуры
+    is_ok = parse_file(file_name, &total_data);
+
+    int edge_number = get_edges_number(total_data.polygons, total_data.number_polygons);
+    ck_assert_int_eq(is_ok, OK);
+    ck_assert_int_eq(edge_number, 4);
+
+    if (is_ok) {
+        free_results(&total_data);
+    }
+}
+
+END_TEST
+
+START_TEST(s21_edge_number_3d) {  // перенос к центру координат
+    char file_name[] = "test_files_obj/cube.obj";
+    int is_ok = OK;
+    obj_data total_data = {0};  // создание итоговой структуры
+    is_ok = parse_file(file_name, &total_data);
+
+    int edge_number = get_edges_number(total_data.polygons, total_data.number_polygons);
+    ck_assert_int_eq(is_ok, OK);
+    ck_assert_int_eq(edge_number, 18);
+
+    if (is_ok) {
+        free_results(&total_data);
+    }
+}
+
+END_TEST
+
+
+
+
+
 int main(void) {
     setlocale(LC_ALL, "en_US.UTF-8");
     int number_failed;
@@ -746,6 +787,10 @@ int main(void) {
     // тесты оцентровки
     tcase_add_test(s21_viewer_h, s21_move_to_center_1);
     tcase_add_test(s21_viewer_h, s21_move_to_center_cub);
+
+    // тест количества граней
+    tcase_add_test(s21_viewer_h, s21_edge_number);
+    tcase_add_test(s21_viewer_h, s21_edge_number_3d);
 
     srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_ENV);

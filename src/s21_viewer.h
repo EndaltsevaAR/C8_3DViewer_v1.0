@@ -128,5 +128,6 @@ double calculate_scale_coefficient(const double *extrems);
 double max_delta_coordinates(const double *deltas);
 
 int get_edges_number(polygon *polygons, unsigned int number_polygons);
+int has_edge(const int *edges, int vertex_start, int vertex_end, int size);
 
 #endif  // S21_3D_VIEWER_H

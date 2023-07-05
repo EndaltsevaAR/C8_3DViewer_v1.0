@@ -668,21 +668,53 @@ double max_delta_coordinates(const double *deltas) {
 
 int get_edges_number(polygon *polygons, unsigned int number_polygons) {
     int answer = 0;
-    int size = 2;
-    int **edges = (int**)calloc(size, sizeof(int*));
-    for (int i = 0; i < 2; ++i) {
-        edges[i] = (int*)calloc(2, sizeof(int));
+    int size = 4;
+    int *edges = (int*)calloc(size * 2, sizeof(int));
+    if (edges == NULL) {
+        printf("Error with calloc at the get_edge\n");
+        return 0;
     }
-
     for (unsigned int i = 0; i < number_polygons; ++i) {
-        for (int j = 0; j < polygons[i].number_vertexes - 1; ++j) {
-            
-        }
-    }
+        for (unsigned int j = 0; j < polygons[i].number_vertexes; ++j) {
+            int start, end;
+            if (j == polygons[i].number_vertexes - 1) {
+                start = (int)polygons[i].vertexes[j];
+                end = (int)polygons[i].vertexes[0];
+            } else {
+                start = (int)polygons[i].vertexes[j];
+                end = (int)polygons[i].vertexes[j+1];
+            }
 
-    for (int i = 0; i < size; ++i) {
-        free(edges[i]);
+            int vertex_start = (start < end) ? start : end; //min
+            int vertex_end = (start > end) ? start : end; //max
+
+            if (has_edge(edges, vertex_start, vertex_end, size)) {
+                if (answer * 2 == size) {
+                    size *= 2;
+                   int *new_edges = (int *)realloc(edges, size * 2* sizeof(int));
+                    if (new_edges == NULL) {
+                        printf("Error with realloc at the get_edge\n");
+                        free(edges);
+                        return 0;
+                    }
+                    edges = new_edges;
+                }
+                edges[2*answer] = vertex_start;
+                edges[2*answer + 1] = vertex_end;
+                ++answer;
+            }
+        }
     }
     free(edges);
     return answer;
+}
+
+int has_edge(const int *edges, int vertex_start, int vertex_end, int size) {
+    int has_edge = OK;
+    for (int i = 0; i < size && has_edge; ++i) {
+        if (edges[i*2] == vertex_start && edges[i*2+1] == vertex_end) {
+            has_edge = FAIL;
+        }
+    }
+    return has_edge;
 }
