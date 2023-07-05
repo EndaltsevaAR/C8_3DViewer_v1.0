@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->button_rotate, SIGNAL(clicked()), this, SLOT(do_rotate()));
     connect(ui->button_edge_color, SIGNAL(clicked()), this, SLOT(set_color_edge()));
     connect(ui->button_vertex_color, SIGNAL(clicked()), this, SLOT(set_color_vertex()));
+    connect(ui->button_background_color, SIGNAL(clicked()), this, SLOT(set_color_background()));
     connect(ui->button_do_extra, SIGNAL(clicked()), this, SLOT(do_extra_changes()));
 }
 
@@ -35,10 +36,24 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::set_start_information() {
+void MainWindow::set_start_affin() {
     x_move_in = 0, y_move_in = 0, z_move_in = 0;
     x_rotate_in = 0, y_rotate_in = 0, z_rotate_in = 0;
     scale_bigger = 1, scale_smaller = 1;
+
+    ui->line_move_x->setText("");
+    ui->line_move_y->setText("");
+    ui->line_move_z->setText("");
+    ui->line_rotate_x->setText("");
+    ui->line_rotate_y->setText("");
+    ui->line_rotate_z->setText("");
+    ui->line_scale_bigger->setText("");
+    ui->line_scale_smaller->setText("");
+}
+
+
+void MainWindow::set_start_information() {
+    set_start_affin();
 
     ui->radio_projection_parallel->setChecked(true);
     ui->viewer_gl_widget->is_projection_ortho = false;
@@ -130,6 +145,7 @@ void MainWindow::on_button_pick_file_clicked()
         ui->label_name_output->setText(lastBit);
         ui->label_vertex_num_output->setText(QString::number(ui->viewer_gl_widget->total_data.number_vertex));
         ui->label_edge_num_output->setText(QString::number(ui->viewer_gl_widget->total_data.number_polygons));
+        set_start_affin();
         ui->viewer_gl_widget->update();
     } else {
         QMessageBox::warning(this, tr("Save Error"), tr("Некорректный файл"));
@@ -206,6 +222,14 @@ void MainWindow::set_color_vertex(){
     QColor vertex_color = QColorDialog::getColor(Qt::white, this, "Выберите цвет отображения вершин");
     if (vertex_color.isValid()) {
       ui->viewer_gl_widget->vertex_color = vertex_color;
+    }
+    ui->viewer_gl_widget->update();
+}
+
+void MainWindow::set_color_background(){
+    QColor background_color = QColorDialog::getColor(Qt::white, this, "Выберите цвет отображения вершин");
+    if (background_color.isValid()) {
+      ui->viewer_gl_widget->background_color = background_color;
     }
     ui->viewer_gl_widget->update();
 }
