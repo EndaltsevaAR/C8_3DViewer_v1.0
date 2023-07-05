@@ -46,7 +46,7 @@
     <property name="geometry">
      <rect>
       <x>760</x>
-      <y>770</y>
+      <y>780</y>
       <width>201</width>
       <height>41</height>
      </rect>
@@ -206,8 +206,8 @@
    <widget class="QPushButton" name="button_pick_file">
     <property name="geometry">
      <rect>
-      <x>715</x>
-      <y>11</y>
+      <x>760</x>
+      <y>10</y>
       <width>175</width>
       <height>25</height>
      </rect>
@@ -221,11 +221,11 @@
      <rect>
       <x>720</x>
       <y>40</y>
-      <width>278</width>
-      <height>661</height>
+      <width>271</width>
+      <height>670</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_common">
+    <layout class="QGridLayout" name="gridLayout_common" rowstretch="2,2,2,2,1,1">
      <property name="leftMargin">
       <number>5</number>
      </property>
@@ -233,13 +233,19 @@
       <number>5</number>
      </property>
      <property name="horizontalSpacing">
-      <number>15</number>
+      <number>5</number>
      </property>
      <property name="verticalSpacing">
-      <number>30</number>
+      <number>20</number>
      </property>
      <item row="0" column="0">
       <layout class="QGridLayout" name="gridLayout_info">
+       <property name="horizontalSpacing">
+        <number>10</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>5</number>
+       </property>
        <item row="2" column="0">
         <widget class="QLabel" name="label_edge_num">
          <property name="text">
@@ -248,7 +254,13 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLabel" name="label__edge_num_output">
+        <widget class="QLabel" name="label_edge_num_output">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+border:1px solid gray;
+background-color:#FFFFFF;
+}</string>
+         </property>
          <property name="text">
           <string>0</string>
          </property>
@@ -256,6 +268,12 @@
        </item>
        <item row="1" column="1">
         <widget class="QLabel" name="label_vertex_num_output">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+border:1px solid gray;
+background-color:#FFFFFF;
+}</string>
+         </property>
          <property name="text">
           <string>0</string>
          </property>
@@ -270,6 +288,12 @@
        </item>
        <item row="0" column="1">
         <widget class="QLabel" name="label_name_output">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+border:1px solid gray;
+background-color:#FFFFFF;
+}</string>
+         </property>
          <property name="text">
           <string>Файл не выбран</string>
          </property>
@@ -286,6 +310,9 @@
      </item>
      <item row="1" column="0">
       <layout class="QGridLayout" name="gridLayout_move">
+       <property name="verticalSpacing">
+        <number>10</number>
+       </property>
        <item row="1" column="0">
         <widget class="QLabel" name="label_move_x">
          <property name="text">
@@ -354,6 +381,12 @@
      </item>
      <item row="2" column="0">
       <layout class="QGridLayout" name="gridLayout_scale">
+       <property name="horizontalSpacing">
+        <number>5</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>10</number>
+       </property>
        <item row="2" column="2">
         <widget class="QPushButton" name="button_scale_bigger">
          <property name="styleSheet">
@@ -388,13 +421,6 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_scale_bigger">
-         <property name="text">
-          <string>По оси X</string>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="1">
         <widget class="QLineEdit" name="line_scale_smaller">
          <property name="text">
@@ -402,13 +428,6 @@
          </property>
          <property name="placeholderText">
           <string>в ... раз</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_scale_smaller">
-         <property name="text">
-          <string>По оси Y</string>
          </property>
         </widget>
        </item>
@@ -426,6 +445,12 @@
      </item>
      <item row="3" column="0">
       <layout class="QGridLayout" name="gridLayout_rotate">
+       <property name="horizontalSpacing">
+        <number>5</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>15</number>
+       </property>
        <item row="1" column="1">
         <widget class="QLineEdit" name="line_rotate_x">
          <property name="placeholderText">
@@ -494,16 +519,12 @@
      </item>
      <item row="4" column="0">
       <layout class="QGridLayout" name="gridLayout_projection">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_projection">
-         <property name="text">
-          <string>Проекция</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
+       <property name="horizontalSpacing">
+        <number>0</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>15</number>
+       </property>
        <item row="1" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_projection">
          <item>
@@ -522,10 +543,26 @@
          </item>
         </layout>
        </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_projection">
+         <property name="text">
+          <string>Проекция</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item row="5" column="0">
       <layout class="QGridLayout" name="gridLayout_background">
+       <property name="horizontalSpacing">
+        <number>0</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>15</number>
+       </property>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_background">
          <property name="text">
@@ -540,6 +577,9 @@
         <widget class="QLabel" name="label_background_color">
          <property name="text">
           <string>Цвет</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>

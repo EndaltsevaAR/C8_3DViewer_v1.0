@@ -26,8 +26,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->button_edge_color, SIGNAL(clicked()), this, SLOT(set_color_edge()));
     connect(ui->button_vertex_color, SIGNAL(clicked()), this, SLOT(set_color_vertex()));
     connect(ui->button_do_extra, SIGNAL(clicked()), this, SLOT(do_extra_changes()));
-
-
 }
 
 MainWindow::~MainWindow()
@@ -40,7 +38,7 @@ MainWindow::~MainWindow()
 void MainWindow::set_start_information() {
     x_move_in = 0, y_move_in = 0, z_move_in = 0;
     x_rotate_in = 0, y_rotate_in = 0, z_rotate_in = 0;
-    x_scale_in = 0, y_scale_in = 0, z_scale_in = 0;
+    scale_bigger = 1, scale_smaller = 1;
 
     ui->radio_projection_parallel->setChecked(true);
     ui->viewer_gl_widget->is_projection_ortho = false;
@@ -130,8 +128,8 @@ void MainWindow::on_button_pick_file_clicked()
         QStringList parts = filename_outside.split("/");
         QString lastBit = parts.at(parts.size() - 1);
         ui->label_name_output->setText(lastBit);
-        ui->label_vertex->setText(QString::number(ui->viewer_gl_widget->total_data.number_vertex));
-        ui->label_edge->setText(QString::number(ui->viewer_gl_widget->total_data.number_polygons));
+        ui->label_vertex_num_output->setText(QString::number(ui->viewer_gl_widget->total_data.number_vertex));
+        ui->label_edge_num_output->setText(QString::number(ui->viewer_gl_widget->total_data.number_polygons));
         ui->viewer_gl_widget->update();
     } else {
         QMessageBox::warning(this, tr("Save Error"), tr("Некорректный файл"));
@@ -140,33 +138,60 @@ void MainWindow::on_button_pick_file_clicked()
 }
 
 void MainWindow::do_move() {
-    x_move_in = ui->line_move_x->text().toDouble();
-    y_move_in = ui->line_move_y->text().toDouble();
-    z_move_in = ui->line_move_z->text().toDouble();
-    move_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_move_in, y_move_in, z_move_in);
-    ui->viewer_gl_widget->update();
+    if (ui->viewer_gl_widget->is_file_loaded) {
+        x_move_in = ui->line_move_x->text().toDouble();
+        y_move_in = ui->line_move_y->text().toDouble();
+        z_move_in = ui->line_move_z->text().toDouble();
+        move_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_move_in, y_move_in, z_move_in);
+        ui->viewer_gl_widget->update();
+    }
 }
 
 void MainWindow::do_scale_bigger() {
-    x_scale_in = ui->line_scale_bigger->text().toDouble();
-    scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_scale_in);
-    ui->viewer_gl_widget->update();
+    if (ui->viewer_gl_widget->is_file_loaded) {
+        scale_bigger = ui->line_scale_bigger->text().toDouble();
+        if(scale_bigger != 0) {
+            scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, scale_bigger);
+            ui->viewer_gl_widget->update();
+
+            scale_smaller = 1; // чтобы одновременно не было коеффициента и в увеличителе и в уменьшителе
+            ui->line_scale_smaller->setText("");
+        } else {
+            QMessageBox::warning(this, tr("Scale Error"), tr("Не масштабируй в ноль, ведь бедную фигуру поглотят черные дыыыыры"));
+            ui->line_scale_bigger->setText("");
+            update();
+        }
+    }
 }
 
 void MainWindow::do_scale_smaller() {
-    x_scale_in = ui->line_scale_smaller->text().toDouble();
-    scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_scale_in);
-    ui->viewer_gl_widget->update();
+    if (ui->viewer_gl_widget->is_file_loaded) {
+        double coefficient_from_user = ui->line_scale_smaller->text().toDouble();
+        if (coefficient_from_user != 0) {
+            scale_smaller = 1/coefficient_from_user;
+            scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, scale_smaller);
+            ui->viewer_gl_widget->update();
+
+            scale_bigger = 0; // чтобы одновременно не было коеффициента и в увеличителе и в уменьшителе
+            ui->line_scale_bigger->setText("");
+        } else {
+            QMessageBox::warning(this, tr("Scale Error"), tr("Не масштабируй в ноль, ведь бедную фигуру поглотят черные дыыыыры"));
+            ui->line_scale_smaller->setText("");
+            update();
+        }
+    }
 }
 
 void MainWindow::do_rotate(){
-    x_rotate_in = ui->line_rotate_x->text().toDouble();
-    y_rotate_in = ui->line_rotate_y->text().toDouble();
-    z_rotate_in = ui->line_rotate_z->text().toDouble();
-    rotate_X(&ui->viewer_gl_widget->total_data.coordMatrix, x_rotate_in);
-    rotate_Y(&ui->viewer_gl_widget->total_data.coordMatrix, y_rotate_in);
-    rotate_Z(&ui->viewer_gl_widget->total_data.coordMatrix, z_rotate_in);
-    ui->viewer_gl_widget->update();
+    if (ui->viewer_gl_widget->is_file_loaded) {
+        x_rotate_in = ui->line_rotate_x->text().toDouble();
+        y_rotate_in = ui->line_rotate_y->text().toDouble();
+        z_rotate_in = ui->line_rotate_z->text().toDouble();
+        rotate_X(&ui->viewer_gl_widget->total_data.coordMatrix, x_rotate_in);
+        rotate_Y(&ui->viewer_gl_widget->total_data.coordMatrix, y_rotate_in);
+        rotate_Z(&ui->viewer_gl_widget->total_data.coordMatrix, z_rotate_in);
+        ui->viewer_gl_widget->update();
+    }
 }
 
 void MainWindow::set_color_edge() {
