@@ -34,7 +34,8 @@ public:
 private slots:
     void on_button_pick_file_clicked();
     void do_move();
-    void do_scale();
+    void do_scale_bigger();
+    void do_scale_smaller();
     void do_rotate();
     void set_color_edge();
     void set_color_vertex();

@@ -24,294 +24,13 @@
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>10</y>
-      <width>281</width>
-      <height>681</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_common">
-     <property name="leftMargin">
-      <number>5</number>
-     </property>
-     <property name="rightMargin">
-      <number>5</number>
-     </property>
-     <item row="0" column="0">
-      <widget class="QPushButton" name="button_pick_file">
-       <property name="text">
-        <string>Выбрать файл типа .obj</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <layout class="QGridLayout" name="gridLayout_info">
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_edge_num">
-         <property name="text">
-          <string>Количество ребер</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label__edge_num_output">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_vertex_num_output">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_name">
-         <property name="text">
-          <string>Имя файла</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_name_output">
-         <property name="text">
-          <string>Файл не выбран</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_vertex_num">
-         <property name="text">
-          <string>Количество вершин</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="0">
-      <layout class="QGridLayout" name="gridLayout_move">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_move_x">
-         <property name="text">
-          <string>По оси X</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_move_y">
-         <property name="text">
-          <string>По оси Y</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="line_move_x">
-         <property name="placeholderText">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="line_move_z">
-         <property name="placeholderText">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="line_move_y">
-         <property name="placeholderText">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="3">
-        <widget class="QLabel" name="label_move">
-         <property name="text">
-          <string>Перемещения</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_move_z">
-         <property name="text">
-          <string>По оси Z</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2" rowspan="3">
-        <widget class="QPushButton" name="button_move">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-     background-color: #3cbaa2;
-}</string>
-         </property>
-         <property name="text">
-          <string>Do it!</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="3" column="0">
-      <layout class="QGridLayout" name="gridLayout_scale">
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_scale_y">
-         <property name="text">
-          <string>По оси Y</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="line_scale_z">
-         <property name="placeholderText">
-          <string>в ... раз</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="line_scale_y">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="placeholderText">
-          <string>в ... раз</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_scale_z">
-         <property name="text">
-          <string>По оси Z</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_scale_x">
-         <property name="text">
-          <string>По оси X</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="line_scale_x">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="placeholderText">
-          <string>в ... раз</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="3">
-        <widget class="QLabel" name="label_scale">
-         <property name="text">
-          <string>Масштабирование</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2" rowspan="3">
-        <widget class="QPushButton" name="button_scale">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-     background-color: #3cbaa2;
-}</string>
-         </property>
-         <property name="text">
-          <string>Do it!</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="4" column="0">
-      <layout class="QGridLayout" name="gridLayout_rotate">
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="line_rotate_z">
-         <property name="placeholderText">
-          <string>на ... радиан</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_rotate_z">
-         <property name="text">
-          <string>По оси Z</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="line_rotate_x">
-         <property name="placeholderText">
-          <string>на ... радиан</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_rotate_x">
-         <property name="text">
-          <string>По оси X</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="line_rotate_y">
-         <property name="placeholderText">
-          <string>на ... радиан</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_rotate_y">
-         <property name="text">
-          <string>По оси Y</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2" rowspan="3">
-        <widget class="QPushButton" name="button_rotate">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-     background-color: #3cbaa2;
-}</string>
-         </property>
-         <property name="text">
-          <string>Do it!</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="3">
-        <widget class="QLabel" name="label_rotate">
-         <property name="text">
-          <string>Перемещения</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
    <widget class="QPushButton" name="button_do_extra">
     <property name="geometry">
      <rect>
-      <x>770</x>
+      <x>760</x>
       <y>730</y>
       <width>201</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -326,8 +45,8 @@
    <widget class="QPushButton" name="button_reset_extra">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>790</y>
+      <x>760</x>
+      <y>770</y>
       <width>201</width>
       <height>41</height>
      </rect>
@@ -341,52 +60,12 @@
      <string>Сбросить все настройки</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>720</y>
-      <width>132</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_projection">
-     <item row="1" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_projection">
-       <item>
-        <widget class="QRadioButton" name="radio_projection_parallel">
-         <property name="text">
-          <string>Паралелльная</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radio_projection_central">
-         <property name="text">
-          <string>Центральная</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_projection">
-       <property name="text">
-        <string>Проекция</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>720</y>
-      <width>281</width>
+      <width>321</width>
       <height>131</height>
      </rect>
     </property>
@@ -449,12 +128,12 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>380</x>
       <y>720</y>
-      <width>291</width>
+      <width>331</width>
       <height>131</height>
      </rect>
     </property>
@@ -521,6 +200,357 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="button_pick_file">
+    <property name="geometry">
+     <rect>
+      <x>715</x>
+      <y>11</y>
+      <width>175</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выбрать файл типа .obj</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>40</y>
+      <width>278</width>
+      <height>661</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_common">
+     <property name="leftMargin">
+      <number>5</number>
+     </property>
+     <property name="rightMargin">
+      <number>5</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>15</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>30</number>
+     </property>
+     <item row="0" column="0">
+      <layout class="QGridLayout" name="gridLayout_info">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_edge_num">
+         <property name="text">
+          <string>Количество ребер</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label__edge_num_output">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_vertex_num_output">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_name">
+         <property name="text">
+          <string>Имя файла</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_name_output">
+         <property name="text">
+          <string>Файл не выбран</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_vertex_num">
+         <property name="text">
+          <string>Количество вершин</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <layout class="QGridLayout" name="gridLayout_move">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_move_x">
+         <property name="text">
+          <string>По оси X</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_move_y">
+         <property name="text">
+          <string>По оси Y</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="line_move_x">
+         <property name="placeholderText">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="line_move_z">
+         <property name="placeholderText">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="line_move_y">
+         <property name="placeholderText">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <widget class="QLabel" name="label_move">
+         <property name="text">
+          <string>Перемещения</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_move_z">
+         <property name="text">
+          <string>По оси Z</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" rowspan="3">
+        <widget class="QPushButton" name="button_move">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+     background-color: #3cbaa2;
+}</string>
+         </property>
+         <property name="text">
+          <string>Потопали!</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0">
+      <layout class="QGridLayout" name="gridLayout_scale">
+       <item row="2" column="2">
+        <widget class="QPushButton" name="button_scale_bigger">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+     background-color: #3cbaa2;
+}</string>
+         </property>
+         <property name="text">
+          <string>Растем, растем!</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="line_scale_bigger">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>в ... раз</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QPushButton" name="button_scale_smaller">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+     background-color: #3cbaa2;
+}</string>
+         </property>
+         <property name="text">
+          <string>Уменьшаемся!</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_scale_bigger">
+         <property name="text">
+          <string>По оси X</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="line_scale_smaller">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>в ... раз</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_scale_smaller">
+         <property name="text">
+          <string>По оси Y</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <widget class="QLabel" name="label_scale">
+         <property name="text">
+          <string>Масштабирование</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0">
+      <layout class="QGridLayout" name="gridLayout_rotate">
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="line_rotate_x">
+         <property name="placeholderText">
+          <string>на ... радиан</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_rotate_x">
+         <property name="text">
+          <string>По оси X</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <widget class="QLabel" name="label_rotate">
+         <property name="text">
+          <string>Поворот</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="line_rotate_z">
+         <property name="placeholderText">
+          <string>на ... радиан</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_rotate_y">
+         <property name="text">
+          <string>По оси Y</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" rowspan="3">
+        <widget class="QPushButton" name="button_rotate">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+     background-color: #3cbaa2;
+}</string>
+         </property>
+         <property name="text">
+          <string>Повертели!</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_rotate_z">
+         <property name="text">
+          <string>По оси Z</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="line_rotate_y">
+         <property name="placeholderText">
+          <string>на ... радиан</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="4" column="0">
+      <layout class="QGridLayout" name="gridLayout_projection">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_projection">
+         <property name="text">
+          <string>Проекция</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_projection">
+         <item>
+          <widget class="QRadioButton" name="radio_projection_parallel">
+           <property name="text">
+            <string>Паралелльная</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radio_projection_central">
+           <property name="text">
+            <string>Центральная</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item row="5" column="0">
+      <layout class="QGridLayout" name="gridLayout_background">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_background">
+         <property name="text">
+          <string>Фон</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_background_color">
+         <property name="text">
+          <string>Цвет</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="button_background_color">
+         <property name="text">
+          <string>Выбирай!</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>

@@ -20,11 +20,12 @@ MainWindow::MainWindow(QWidget *parent)
 //    load_settings();
 
     connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_move()));
-    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_scale()));
-    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_rotate()));
-    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(set_color_edge()));
-    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(set_color_vertex()));
-    connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_extra_changes()));
+    connect(ui->button_scale_bigger, SIGNAL(clicked()), this, SLOT(do_scale_bigger()));
+    connect(ui->button_scale_smaller, SIGNAL(clicked()), this, SLOT(do_scale_smaller()));
+    connect(ui->button_rotate, SIGNAL(clicked()), this, SLOT(do_rotate()));
+    connect(ui->button_edge_color, SIGNAL(clicked()), this, SLOT(set_color_edge()));
+    connect(ui->button_vertex_color, SIGNAL(clicked()), this, SLOT(set_color_vertex()));
+    connect(ui->button_do_extra, SIGNAL(clicked()), this, SLOT(do_extra_changes()));
 
 
 }
@@ -122,10 +123,10 @@ void MainWindow::on_button_pick_file_clicked()
     QByteArray file_name_bytes = filename_outside.toUtf8();
     const char* file_name_cstr = file_name_bytes.constData();
 
-
     ui->viewer_gl_widget->filename = filename_outside;
 
     if (start(file_name_cstr, &ui->viewer_gl_widget->total_data) == 1) {
+        ui->viewer_gl_widget->is_file_loaded = true;
         QStringList parts = filename_outside.split("/");
         QString lastBit = parts.at(parts.size() - 1);
         ui->label_name_output->setText(lastBit);
@@ -146,11 +147,15 @@ void MainWindow::do_move() {
     ui->viewer_gl_widget->update();
 }
 
-void MainWindow::do_scale() {
-    x_scale_in = ui->line_scale_x->text().toDouble();
-    y_scale_in = ui->line_scale_y->text().toDouble();
-    z_scale_in = ui->line_scale_z->text().toDouble();
-    scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_scale_in, y_scale_in, z_scale_in);
+void MainWindow::do_scale_bigger() {
+    x_scale_in = ui->line_scale_bigger->text().toDouble();
+    scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_scale_in);
+    ui->viewer_gl_widget->update();
+}
+
+void MainWindow::do_scale_smaller() {
+    x_scale_in = ui->line_scale_smaller->text().toDouble();
+    scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, x_scale_in);
     ui->viewer_gl_widget->update();
 }
 

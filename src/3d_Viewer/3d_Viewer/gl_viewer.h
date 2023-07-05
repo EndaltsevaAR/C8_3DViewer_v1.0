@@ -44,6 +44,7 @@ class gl_viewer : public QOpenGLWidget {
   bool is_edge_solid;  // тип отображения ребер - по умолчанию - сплошной
   enum vertex_type vert_type;
   bool destroy_status = false; // необходимость очищать память
+  bool is_file_loaded = false;
 
   QColor background_color;
   QColor vertex_color;
