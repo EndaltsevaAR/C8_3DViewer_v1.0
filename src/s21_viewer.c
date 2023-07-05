@@ -688,7 +688,7 @@ int get_edges_number(polygon *polygons, unsigned int number_polygons) {
             int vertex_start = (start < end) ? start : end; //min
             int vertex_end = (start > end) ? start : end; //max
 
-            if (has_edge(edges, vertex_start, vertex_end, size)) {
+            if (has_edge(edges, vertex_start, vertex_end, answer*2)) {
                 if (answer * 2 == size) {
                     size *= 2;
                    int *new_edges = (int *)realloc(edges, size * 2* sizeof(int));
@@ -711,8 +711,8 @@ int get_edges_number(polygon *polygons, unsigned int number_polygons) {
 
 int has_edge(const int *edges, int vertex_start, int vertex_end, int size) {
     int has_edge = OK;
-    for (int i = 0; i < size && has_edge; ++i) {
-        if (edges[i*2] == vertex_start && edges[i*2+1] == vertex_end) {
+    for (int i = 0; i < size - 1 && has_edge; i+=2) {
+        if (edges[i] == vertex_start && edges[i+1] == vertex_end) {
             has_edge = FAIL;
         }
     }
