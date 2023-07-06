@@ -84,14 +84,13 @@ void MainWindow::set_default_settings_system() {
     ui->viewer_gl_widget->background_color = Qt::yellow;
 }
 
-
 void MainWindow::set_start_information() {
     set_default_settings_figure();
     set_default_settings_system();
 }
 
 void MainWindow::save_settings() {
-    QSettings settings("Company", "Application");
+    QSettings settings("Viewer", "Application");
     settings.beginGroup("Common");
         settings.setValue("background_color", ui->viewer_gl_widget->background_color);
         settings.setValue("projection_type", ui->viewer_gl_widget->is_projection_ortho);
@@ -111,7 +110,7 @@ void MainWindow::save_settings() {
 }
 
 void MainWindow::load_settings() {
-    QSettings settings("Company", "Application");
+    QSettings settings("Viewer", "Application");
     settings.beginGroup("Common");
          ui->viewer_gl_widget->background_color = settings.value("background_color").toString();
          ui->viewer_gl_widget->is_projection_ortho = settings.value("projection_type").toBool();
@@ -145,12 +144,9 @@ void MainWindow::load_settings() {
     ui->line_edge_depth->setText(settings.value("edge_depth").toString());
 
     settings.endGroup();
-
-
 }
 
-void MainWindow::on_button_pick_file_clicked()
-{
+void MainWindow::on_button_pick_file_clicked() {
     QString filename_outside = QFileDialog::getOpenFileName(this, "Choooose", "./models/", "Object files (*.obj)");
     QByteArray file_name_bytes = filename_outside.toUtf8();
     const char* file_name_cstr = file_name_bytes.constData();
@@ -169,7 +165,6 @@ void MainWindow::on_button_pick_file_clicked()
     } else {
         QMessageBox::warning(this, tr("Save Error"), tr("Некорректный файл"));
     }
-
 }
 
 void MainWindow::do_move() {
@@ -189,10 +184,10 @@ void MainWindow::do_scale_bigger() {
             scale_coordinate(&ui->viewer_gl_widget->total_data.coordMatrix, scale_bigger);
             ui->viewer_gl_widget->update();
 
-            scale_smaller = 1; // чтобы одновременно не было коеффициента и в увеличителе и в уменьшителе
+            scale_smaller = 1;
             ui->line_scale_smaller->setText("");
         } else {
-            QMessageBox::warning(this, tr("Scale Error"), tr("Не масштабируй в ноль, ведь бедную фигуру поглотят черные дыыыыры"));
+            QMessageBox::warning(this, tr("Scale Error"), tr("Не масштабируй так, ведь бедную фигуру поглотят черные дыыыыры"));
             ui->line_scale_bigger->setText("");
             update();
         }
@@ -210,7 +205,7 @@ void MainWindow::do_scale_smaller() {
             scale_bigger = 0; // чтобы одновременно не было коеффициента и в увеличителе и в уменьшителе
             ui->line_scale_bigger->setText("");
         } else {
-            QMessageBox::warning(this, tr("Scale Error"), tr("Не масштабируй в ноль, ведь бедную фигуру поглотят черные дыыыыры"));
+            QMessageBox::warning(this, tr("Scale Error"), tr("Не масштабируй так, ведь бедную фигуру поглотят черные дыыыыры"));
             ui->line_scale_smaller->setText("");
             update();
         }
@@ -234,7 +229,6 @@ void MainWindow::set_color_edge() {
     if (edge_color.isValid() && edge_color != ui->viewer_gl_widget->background_color) {
       ui->viewer_gl_widget->edge_color = edge_color;
     }
-
 }
 
 void MainWindow::set_color_vertex(){
@@ -242,7 +236,6 @@ void MainWindow::set_color_vertex(){
     if (vertex_color.isValid() && vertex_color != ui->viewer_gl_widget->background_color) {
       ui->viewer_gl_widget->vertex_color = vertex_color;
     }
-
 }
 
 void MainWindow::set_color_background(){
@@ -253,7 +246,6 @@ void MainWindow::set_color_background(){
 }
 
 void MainWindow::do_extra_figure_changes(){
-    // обработка ребер
     if (ui->radio_edge_solid->isChecked()) {
         ui->viewer_gl_widget->is_edge_solid = true;
     } else {
@@ -261,7 +253,6 @@ void MainWindow::do_extra_figure_changes(){
     }
     ui->viewer_gl_widget->edge_depth = ui->line_edge_depth->text().toDouble();
 
-    // обработка вершин
     if (ui->radio_vertex_circle->isChecked()) {
         ui->viewer_gl_widget->vert_type = CIRLCE;
     } else if (ui->radio_vertex_square->isChecked()) {
@@ -274,14 +265,12 @@ void MainWindow::do_extra_figure_changes(){
     ui->viewer_gl_widget->update();
 }
 
-
 void MainWindow:: do_reset_figure_changes() {
     set_default_settings_figure();
     ui->viewer_gl_widget->update();
 }
 
 void MainWindow:: do_extra_system_changes() {
-    // обработка проекции
     if(ui->radio_projection_central->isChecked()) {
         ui->viewer_gl_widget->is_projection_ortho = false;
     } else {
@@ -291,7 +280,6 @@ void MainWindow:: do_extra_system_changes() {
 }
 
 void MainWindow:: do_reset_system_changes() {
-
     set_default_settings_system();
     ui->viewer_gl_widget->update();
 }

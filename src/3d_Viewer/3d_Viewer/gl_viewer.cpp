@@ -29,10 +29,6 @@ void gl_viewer::paintGL() {
     }
 }
 
-void gl_viewer::resizeGL(int w, int h) {
-    glViewport(0,0,w,h);
-}
-
 void gl_viewer::destroy_viewer() {
    if(destroy_status) {
        free_results(&total_data);
