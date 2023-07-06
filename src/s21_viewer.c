@@ -610,11 +610,11 @@ int preparation_to_init_draw(obj_data *total_data) {
 }
 
 void calculate_extrems(coord_matrix coordMatrix, double *extrems) {
-    for (int i = 0; i < NUMBER_COORD_XYZ; ++i) {
+    for (unsigned int i = 0; i < NUMBER_COORD_XYZ; ++i) {
         extrems[i *2] = coordMatrix.coordinates[1][i]; // нулевая строчка не используется, поэтому инициализация идет с 1 строчки
         extrems[i * 2 + 1] = coordMatrix.coordinates[1][i];
     }
-    for (int i = 2; i < coordMatrix.rows; ++i) {
+    for (unsigned int i = 2; i < coordMatrix.rows; ++i) {
         for (int j = 0; j < NUMBER_COORD_XYZ; ++j) {
             extrems[j * 2] = min_two_doubles(extrems[j * 2], coordMatrix.coordinates[i][j]);
             extrems[j * 2 + 1] = max_two_doubles(extrems[j * 2 + 1],
@@ -626,7 +626,7 @@ void calculate_extrems(coord_matrix coordMatrix, double *extrems) {
 int move_to_center(obj_data *total_data, const double *extrems) {    // оцентровка
     double shift_values[NUMBER_COORD_XYZ] = {
             0}; // поиск на сколько сдвигать каждую точку по каждой координате, чтобы фигура была оцентрирована
-    for (int i = 0; i < NUMBER_COORD_XYZ; ++i) {
+    for (unsigned int i = 0; i < NUMBER_COORD_XYZ; ++i) {
         shift_values[i] = extrems[i * 2] +
                           (extrems[i * 2 + 1] - extrems[i * 2]) /
                           2; // формула: min + (max - min)/2
@@ -641,7 +641,7 @@ int scale_0_1(obj_data *total_data, double *extrems) {    // изменение 
 
 double calculate_scale_coefficient(const double *extrems) {
     double deltas[NUMBER_COORD_XYZ] = {0};
-    for (int i = 0; i < NUMBER_COORD_XYZ; ++i) {
+    for (unsigned int i = 0; i < NUMBER_COORD_XYZ; ++i) {
         deltas[i] = extrems[2 * i + 1] - extrems[2 * i];
     }
     double max_delta = max_delta_coordinates(deltas);
@@ -650,7 +650,7 @@ double calculate_scale_coefficient(const double *extrems) {
 
 double max_delta_coordinates(const double *deltas) {
     double max = deltas[0];
-    for (int i = 1; i < NUMBER_COORD_XYZ; ++i) {
+    for (unsigned int i = 1; i < NUMBER_COORD_XYZ; ++i) {
         if (deltas[i] > max) {
             max = deltas[i];
         }
