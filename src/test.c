@@ -16,7 +16,7 @@ END_TEST
 
 START_TEST(s21_simple_good_test_file_2_spaces) {
     printf("Test simple_good_test_file_2_spaces\n");
-    char file_name[] = "test_files_obj/simple_test_2_spaces.obj";
+    char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, OK);
@@ -26,7 +26,7 @@ END_TEST
 
 START_TEST(s21_simple_good_test_file_1_spaces) {
     printf("Test good file name\n");
-    char file_name[] = "test_files_obj/simple_test_1_spaces.obj";
+    char file_name[] = "test_files_obj/simple_test_1_spaces.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, OK);
@@ -36,7 +36,7 @@ END_TEST
 
 START_TEST(s21_4_coordinates) {
     printf("Test good 4_coordinates\n");
-    char file_name[] = "test_files_obj/forth_coordinate.obj";
+    char file_name[] = "test_files_obj/forth_coordinate.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, OK);
@@ -46,7 +46,7 @@ END_TEST
 
 START_TEST(s21_polygons_types) {
     printf("Test good polygons_types\n");
-    char file_name[] = "test_files_obj/polygons_types.obj";
+    char file_name[] = "test_files_obj/polygons_types.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, OK);
@@ -68,7 +68,7 @@ END_TEST
 
 START_TEST(s21_bad_file_dir) {
     printf("Test bad file directory\n");
-    char file_name[] = "simple_test_2_spaces.obj";
+    char file_name[] = "simple_test_2_spaces.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -78,7 +78,7 @@ END_TEST
 
 START_TEST(s21_2_coordinates) {
     printf("Test bad 2_coordinates\n");
-    char file_name[] = "test_files_obj/two_coordinates.obj";
+    char file_name[] = "test_files_obj/two_coordinates.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -88,7 +88,7 @@ END_TEST
 
 START_TEST(s21_5_coordinates) {
     printf("Test bad 5_coordinates\n");
-    char file_name[] = "test_files_obj/five_coordinates.obj";
+    char file_name[] = "test_files_obj/five_coordinates.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -98,7 +98,7 @@ END_TEST
 
 START_TEST(s21_2_coordinates_for_polygon) {
     printf("Test bad f2_coordinates_for_polygon\n");
-    char file_name[] = "test_files_obj/two_coord_for_polygon.obj";
+    char file_name[] = "test_files_obj/two_coord_for_polygon.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -108,7 +108,7 @@ END_TEST
 
 START_TEST(s21_empty_vertexes) {
     printf("Test bad empty_vertexes\n");
-    char file_name[] = "test_files_obj/empty_vertexes.obj";
+    char file_name[] = "test_files_obj/empty_vertexes.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -118,7 +118,7 @@ END_TEST
 
 START_TEST(s21_empty_polygons) {
     printf("Test bad empty_polygons\n");
-    char file_name[] = "test_files_obj/empty_polygons.obj";
+    char file_name[] = "test_files_obj/empty_polygons.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -128,7 +128,7 @@ END_TEST
 
 START_TEST(s21_empty_file) {
     printf("Test bad empty_file\n");
-    char file_name[] = "test_files_obj/empty.obj";
+    char file_name[] = "test_files_obj/empty.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -138,7 +138,7 @@ END_TEST
 
 START_TEST(s21_not_correct_vertex_coordinate) {
     printf("Test bad vertex coordinate is not correct\n");
-    char file_name[] = "test_files_obj/not_correct_vertex_coordinate.obj";
+    char file_name[] = "test_files_obj/not_correct_vertex_coordinate.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -148,7 +148,7 @@ END_TEST
 
 START_TEST(s21_not_correct_vertex_at_polygon) {
     printf("Test bad vertex number at the polygon is not correct\n");
-    char file_name[] = "test_files_obj/not_correct_vertex_for_polygon.obj";
+    char file_name[] = "test_files_obj/not_correct_vertex_for_polygon.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -158,7 +158,7 @@ END_TEST
 
 START_TEST(s21_negative_vertex_at_polygon) {
     printf("Test bad vertex number at the polygon is negative\n");
-    char file_name[] = "test_files_obj/negative_vertex_for_polygon.obj";
+    char file_name[] = "test_files_obj/negative_vertex_for_polygon.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -168,7 +168,7 @@ END_TEST
 
 START_TEST(s21_zero_vertex_at_polygon) {
     printf("Test bad vertex number at the polygon is zero\n");
-    char file_name[] = "test_files_obj/zero_vertex_for_polygon.obj";
+    char file_name[] = "test_files_obj/zero_vertex_for_polygon.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -178,7 +178,7 @@ END_TEST
 
 START_TEST(s21_no_vertex_at_polygon) {
     printf("Test bad vertex number at the polygon is missing\n");
-    char file_name[] = "test_files_obj/miss_vertex_for_polygon.obj";
+    char file_name[] = "test_files_obj/miss_vertex_for_polygon.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -190,7 +190,7 @@ END_TEST
 
 START_TEST(s21_check_negative) {
     printf("Test check vertex number as negative\n");
-    char file_name[] = "test_files_obj/check_negative.obj";
+    char file_name[] = "test_files_obj/check_negative.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -200,7 +200,7 @@ END_TEST
 
 START_TEST(s21_check_0) {
     printf("Test check vertex number as negative\n");
-    char file_name[] = "test_files_obj/check_0.obj";
+    char file_name[] = "test_files_obj/check_0.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -210,7 +210,7 @@ END_TEST
 
 START_TEST(s21_check_big) {
     printf("Test check vertex number at the polygon is too much\n");
-    char file_name[] = "test_files_obj/check_big.obj";
+    char file_name[] = "test_files_obj/check_big.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
     ck_assert_int_eq(status, FAIL);
@@ -225,7 +225,7 @@ START_TEST(s21_move_xyz_m10_10) {
         for (double diff = -10; diff <= 10; diff += 5) {
             int is_ok = OK;
             printf("Test check moving for  coord by 5\n");
-            char file_name[] = "test_files_obj/simple_cub.obj";
+            char file_name[] = "test_files_obj/simple_cub.txt";
             obj_data total_data = {0};  //создание итоговой структуры
             start(file_name, &total_data);
             coord_matrix test_result = {0};
@@ -286,7 +286,7 @@ START_TEST(s21_scale_xyz_m11_11) {
     for (double diff = -11; diff <= 11; diff += 5) {
         int is_ok = OK;
         printf("Test check scaling for x coord by 5\n");
-        char file_name[] = "test_files_obj/simple_cub.obj";
+        char file_name[] = "test_files_obj/simple_cub.txt";
         obj_data total_data = {0};  //создание итоговой структуры
         parse_file(file_name, &total_data);
         print_data(total_data);
@@ -330,7 +330,7 @@ START_TEST(s21_rotate_X) {
         int is_ok = OK;
         printf("Test rotate for x coord by 15\n");
         printf("angle is %lf\n", diff);
-        char file_name[] = "test_files_obj/simple_test_2_spaces.obj";
+        char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
         obj_data total_data = {0};  //создание итоговой структуры
         parse_file(file_name, &total_data);
 
@@ -375,7 +375,7 @@ START_TEST(s21_rotate_Y) {
         int is_ok = OK;
         printf("Test rotate for x coord by 15\n");
         printf("angle is %lf\n", diff);
-        char file_name[] = "test_files_obj/simple_test_2_spaces.obj";
+        char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
         obj_data total_data = {0};  //создание итоговой структуры
         parse_file(file_name, &total_data);
 
@@ -420,7 +420,7 @@ START_TEST(s21_rotate_Z) {
         int is_ok = OK;
         printf("Test rotate for x coord by 15\n");
         printf("angle is %lf\n", diff);
-        char file_name[] = "test_files_obj/simple_test_2_spaces.obj";
+        char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
         obj_data total_data = {0};  //создание итоговой структуры
         parse_file(file_name, &total_data);
 
@@ -465,7 +465,7 @@ START_TEST(s21_move_scale_xyz_m11_11) {
         for (double diff = -11; diff <= 11; diff += 5) {
             int is_ok = OK;
             printf("Test check moving and scale for  coord by 5\n");
-            char file_name[] = "test_files_obj/simple_test_2_spaces.obj";
+            char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
             obj_data total_data = {0};  //создание итоговой структуры
             parse_file(file_name, &total_data);
 
@@ -531,7 +531,7 @@ START_TEST(s21_scale_move_xyz_m11_11) {
         for (double diff = -11; diff <= 11; diff += 5) {
             int is_ok = OK;
             printf("Test check moving and scale for  coord by 5\n");
-            char file_name[] = "test_files_obj/simple_cub.obj";
+            char file_name[] = "test_files_obj/simple_cub.txt";
             obj_data total_data = {0};  //создание итоговой структуры
             parse_file(file_name, &total_data);
             print_data(total_data);
@@ -593,7 +593,7 @@ START_TEST(s21_rotate_XYZ) {  // без проверки значений
         int is_ok = OK;
         printf("Test rotate for x,y,z coord by 15\n");
         printf("angle is %lf\n", diff);
-        char file_name[] = "test_files_obj/simple_test_2_spaces.obj";
+        char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
         obj_data total_data = {0};  //создание итоговой структуры
         parse_file(file_name, &total_data);
         print_data(total_data);
@@ -620,7 +620,7 @@ END_TEST
 
 // тесты оцентровки
 START_TEST(s21_move_to_center_1) {  // перенос к центру координат
-    char file_name[] = "test_files_obj/simple_cub.obj";
+    char file_name[] = "test_files_obj/simple_cub.txt";
     int is_ok = OK;
     obj_data total_data = {0};  // создание итоговой структуры
     is_ok = parse_file(file_name, &total_data);
@@ -661,7 +661,7 @@ END_TEST
 
 
 START_TEST(s21_move_to_center_cub) {  // перенос к центру координат
-    char file_name[] = "test_files_obj/simple_cub.obj";
+    char file_name[] = "test_files_obj/simple_cub.txt";
     int is_ok = OK;
     obj_data total_data = {0};  // создание итоговой структуры
     is_ok = parse_file(file_name, &total_data);
@@ -699,7 +699,7 @@ END_TEST
 
 
 START_TEST(s21_edge_number) {  // перенос к центру координат
-    char file_name[] = "test_files_obj/simple_cub.obj";
+    char file_name[] = "test_files_obj/simple_cub.txt";
     int is_ok = OK;
     obj_data total_data = {0};  // создание итоговой структуры
     is_ok = parse_file(file_name, &total_data);
@@ -716,7 +716,7 @@ START_TEST(s21_edge_number) {  // перенос к центру координ�
 END_TEST
 
 START_TEST(s21_edge_number_3d) {  // перенос к центру координат
-    char file_name[] = "test_files_obj/cube.obj";
+    char file_name[] = "test_files_obj/cube.txt";
     int is_ok = OK;
     obj_data total_data = {0};  // создание итоговой структуры
     is_ok = parse_file(file_name, &total_data);

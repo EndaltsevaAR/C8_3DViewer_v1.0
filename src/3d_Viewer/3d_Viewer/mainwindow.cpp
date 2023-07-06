@@ -65,6 +65,9 @@ void MainWindow::set_default_settings_figure() {
     ui->viewer_gl_widget->vertex_depth = DEPTH;
     ui->viewer_gl_widget->edge_depth = DEPTH;
 
+    ui->line_edge_depth->setText("");
+    ui->line_vertex_depth->setText("");
+
     ui->viewer_gl_widget->edge_color = Qt::red;
      ui->viewer_gl_widget->vertex_color = Qt::black;
 }

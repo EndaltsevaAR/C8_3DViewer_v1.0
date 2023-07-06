@@ -3,7 +3,7 @@
 
 /*
 int main() {
-    char file_name[] = "simple_test_1_spaces.obj";
+    char file_name[] = "simple_test_1_spaces.txt";
     int status = parsing_process_for_tests(file_name);
     printf("\n");
 }
@@ -236,7 +236,7 @@ int parsePolygon(char *line, polygon *polygons, unsigned int polygon_i) {
             (unsigned int *) malloc(max_vertexes * sizeof(unsigned int));
 
     if (vertexes == NULL) {
-        fprintf(stderr, "Failed to allocate memory for polygon %u.\n", polygon_i);
+        printf("Failed to allocate memory for polygon %u.\n", polygon_i);
         is_ok = FAIL;
     }
     while (token != NULL && is_ok) {
@@ -492,12 +492,6 @@ int rotate_Z(coord_matrix *coordMatrix,
 int s21_mult_matrix(coord_matrix *A, coord_matrix *B,
                     coord_matrix *result) {  // Умножение двух матриц
     int status = OK;
-
-    // это проверка тут на всякий случай,
-    if (A->cols != B->rows) {  // Число столбцов первой матрицы должно быть равно
-        // числу строк второй матрицы
-        status = AFFIN_FAIL;
-    }
 
     if (status == OK) {
         result->rows = A->rows;
