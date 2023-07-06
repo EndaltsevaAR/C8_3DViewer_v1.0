@@ -16,7 +16,6 @@ void gl_viewer::paintGL() {
       glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
     } else {
       glFrustum(-1, 1, -1, 1, 0, 4);
- //     glTranslatef(0,0,-2);
     }
 
     glMatrixMode(GL_MODELVIEW);

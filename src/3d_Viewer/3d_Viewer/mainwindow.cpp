@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     set_start_information();
-//    load_settings();
+    load_settings();
 
     connect(ui->button_move, SIGNAL(clicked()), this, SLOT(do_move()));
     connect(ui->button_scale_bigger, SIGNAL(clicked()), this, SLOT(do_scale_bigger()));
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     ui->viewer_gl_widget->destroy_viewer();
- //   save_settings();
+    save_settings();
     delete ui;
 }
 
