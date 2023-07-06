@@ -9,6 +9,19 @@ void gl_viewer::paintGL() {
     glClearColor(background_color.redF(), background_color.greenF(),
                  background_color.blueF(), background_color.alphaF());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    if (is_projection_ortho) {
+      glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+    } else {
+      glFrustum(-1, 1, -1, 1, 2, 6);
+      glTranslatef(0,0,-2);
+    }
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
     if (is_file_loaded) {
         if (vert_type != NOTHING) {
             paint_vertex();

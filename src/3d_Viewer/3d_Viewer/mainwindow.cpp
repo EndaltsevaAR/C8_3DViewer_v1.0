@@ -55,8 +55,6 @@ void MainWindow::set_start_affin() {
 }
 
 void MainWindow::set_default_settings_figure() {
-    set_start_affin();
-
     ui->radio_vertex_nothing->setChecked(true);
     ui->viewer_gl_widget->vert_type = NOTHING;
 
@@ -68,8 +66,10 @@ void MainWindow::set_default_settings_figure() {
 }
 
 void MainWindow::set_default_settings_system() {
+    set_start_affin();
+
     ui->radio_projection_parallel->setChecked(true);
-    ui->viewer_gl_widget->is_projection_ortho = false;
+    ui->viewer_gl_widget->is_projection_ortho = true;
 
     ui->radio_edge_solid->setChecked(true);
     ui->viewer_gl_widget->is_edge_solid = true;
@@ -283,6 +283,7 @@ void MainWindow:: do_extra_system_changes() {
 }
 
 void MainWindow:: do_reset_system_changes() {
+
     set_default_settings_system();
     ui->viewer_gl_widget->update();
 }
