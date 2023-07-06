@@ -2,17 +2,8 @@
 #include "s21_viewer.h"
 
 // good tests
-/*
-START_TEST(s21_simple_good_big_file) {
-    printf("Test s21_simple_good_big_file\n");
-    char file_name[] = "test_files_obj/good_man.obj";
-    int status = parsing_process_for_tests(file_name);
-    printf("\n");
-    ck_assert_int_eq(status, OK);
-}
-*/
-END_TEST
 
+END_TEST
 
 START_TEST(s21_simple_good_test_file_2_spaces) {
     printf("Test simple_good_test_file_2_spaces\n");
@@ -221,42 +212,46 @@ END_TEST
 // moving tests
 
 START_TEST(s21_move_xyz_m10_10) {
+    // type is type of coordinate (x, y, z), diff is step
     for (unsigned int type = 0; type < 3; ++type) {
         for (double diff = -10; diff <= 10; diff += 5) {
             int is_ok = OK;
             printf("Test check moving for  coord by 5\n");
             char file_name[] = "test_files_obj/simple_cub.txt";
-            obj_data total_data = {0};  //создание итоговой структуры
-            start(file_name, &total_data);
+            obj_data total_data = {0};
+            is_ok = start(file_name, &total_data);
+            if (!is_ok) {
+                ck_assert_int_eq(is_ok, OK);
+                continue;
+            }
             coord_matrix test_result = {0};
-            init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+            is_ok = init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+            if (!is_ok) {
+                free_results(&total_data);
+                ck_assert_int_eq(is_ok, OK);
+                continue;
+            }
             double coefficient = total_data.coordMatrix.scale_coefficient;
             for (unsigned int i = 0; i < test_result.rows; ++i) {
                 for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
                     if (j == type) {
-                        test_result.coordinates[i][j] =
-                                total_data.coordMatrix.coordinates[i][j] +
-                                diff * coefficient;  // тест, на то, что все сдвинется именно по х на 5
+                        test_result.coordinates[i][j] = total_data.coordMatrix.coordinates[i][j] + diff * coefficient;
                     } else {
-                        test_result.coordinates[i][j] =
-                                total_data.coordMatrix.coordinates[i][j];
+                        test_result.coordinates[i][j] = total_data.coordMatrix.coordinates[i][j];
                     }
                 }
             }
 
             switch (type) {
                 case 0:
-                    is_ok = move_coordinate(&total_data.coordMatrix, diff, 0,
-                                            0);  // по х на diff
+                    is_ok = move_coordinate(&total_data.coordMatrix, diff, 0, 0);
 
                     break;
                 case 1:
-                    is_ok = move_coordinate(&total_data.coordMatrix, 0, diff,
-                                            0);  // по y на diff
+                    is_ok = move_coordinate(&total_data.coordMatrix, 0, diff, 0);
                     break;
                 case 2:
-                    is_ok = move_coordinate(&total_data.coordMatrix, 0, 0,
-                                            diff);  // по x на diff
+                    is_ok = move_coordinate(&total_data.coordMatrix, 0, 0, diff);
                     break;
             }
             if (!is_ok) {
@@ -287,28 +282,31 @@ START_TEST(s21_scale_xyz_m11_11) {
         int is_ok = OK;
         printf("Test check scaling for x coord by 5\n");
         char file_name[] = "test_files_obj/simple_cub.txt";
-        obj_data total_data = {0};  //создание итоговой структуры
-        parse_file(file_name, &total_data);
+        obj_data total_data = {0};
+        is_ok = parse_file(file_name, &total_data);
+        if (!is_ok) {
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         print_data(total_data);
         coord_matrix test_result = {0};
-        init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+        is_ok = init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+        if (!is_ok) {
+            free_results(&total_data);
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         for (unsigned int i = 0; i < test_result.rows; ++i) {
             for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
-                test_result.coordinates[i][j] =
-                        total_data.coordMatrix.coordinates[i][j] *
-                        diff;  // тест, на то, что все увеличится именно по х на 5
+                test_result.coordinates[i][j] = total_data.coordMatrix.coordinates[i][j] * diff;
             }
         }
-
-        is_ok = scale_coordinate(&total_data.coordMatrix,
-                                 diff);  // по х на diff  // в масштабировании если не изменяется
-
+        is_ok = scale_coordinate(&total_data.coordMatrix, diff);
         if (!is_ok) {
             printf("We can not do this transformation!\n");
         }
         printf("After scaling\n");
         print_data(total_data);
-
         ck_assert_int_eq(is_ok, OK);
         for (unsigned int i = 1; i < total_data.number_vertex; ++i) {
             for (unsigned int j = 0; j < NUMBER_COORD_XYZ; ++j) {
@@ -318,7 +316,6 @@ START_TEST(s21_scale_xyz_m11_11) {
         }
         free_coord_matrix(&test_result);
         free_results(&total_data);
-
         printf("\n");
     }
 }
@@ -329,13 +326,20 @@ START_TEST(s21_rotate_X) {
     for (double diff = -s21_PI_2; diff <= s21_PI_2; diff += s21_PI_4) {
         int is_ok = OK;
         printf("Test rotate for x coord by 15\n");
-        printf("angle is %lf\n", diff);
         char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
-        obj_data total_data = {0};  //создание итоговой структуры
-        parse_file(file_name, &total_data);
-
+        obj_data total_data = {0};
+        is_ok = parse_file(file_name, &total_data);
+        if (!is_ok) {
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         coord_matrix test_result = {0};
-        init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+        is_ok = init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+        if (!is_ok) {
+            free_results(&total_data);
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         for (unsigned int i = 1; i < test_result.rows; ++i) {
             test_result.coordinates[i][0] = total_data.coordMatrix.coordinates[i][0];
             test_result.coordinates[i][1] =
@@ -374,13 +378,20 @@ START_TEST(s21_rotate_Y) {
     for (double diff = -s21_PI_2; diff <= s21_PI_2; diff += s21_PI_4) {
         int is_ok = OK;
         printf("Test rotate for x coord by 15\n");
-        printf("angle is %lf\n", diff);
         char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
-        obj_data total_data = {0};  //создание итоговой структуры
-        parse_file(file_name, &total_data);
-
+        obj_data total_data = {0};
+        is_ok = parse_file(file_name, &total_data);
+        if (!is_ok) {
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         coord_matrix test_result = {0};
-        init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+        is_ok = init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+        if (!is_ok) {
+            free_results(&total_data);
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         for (unsigned int i = 1; i < test_result.rows; ++i) {
             test_result.coordinates[i][0] =
                     total_data.coordMatrix.coordinates[i][0] * cos(diff) +
@@ -419,13 +430,20 @@ START_TEST(s21_rotate_Z) {
     for (double diff = -s21_PI_2; diff <= s21_PI_2; diff += s21_PI_4) {
         int is_ok = OK;
         printf("Test rotate for x coord by 15\n");
-        printf("angle is %lf\n", diff);
         char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
-        obj_data total_data = {0};  //создание итоговой структуры
-        parse_file(file_name, &total_data);
-
+        obj_data total_data = {0};
+        is_ok = parse_file(file_name, &total_data);
+        if (!is_ok) {
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         coord_matrix test_result = {0};
-        init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+        is_ok = init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+        if (!is_ok) {
+            free_results(&total_data);
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         for (unsigned int i = 1; i < test_result.rows; ++i) {
             test_result.coordinates[i][0] =
                     total_data.coordMatrix.coordinates[i][0] * cos(diff) -
@@ -453,7 +471,6 @@ START_TEST(s21_rotate_Z) {
         }
         free_coord_matrix(&test_result);
         free_results(&total_data);
-
         printf("\n");
     }
 }
@@ -461,26 +478,33 @@ START_TEST(s21_rotate_Z) {
 END_TEST
 
 START_TEST(s21_move_scale_xyz_m11_11) {
+    // type is type of coordinate (x, y, z), diff is step
     for (unsigned int type = 0; type < 3; ++type) {
         for (double diff = -11; diff <= 11; diff += 5) {
             int is_ok = OK;
             printf("Test check moving and scale for  coord by 5\n");
             char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
-            obj_data total_data = {0};  //создание итоговой структуры
-            parse_file(file_name, &total_data);
-
+            obj_data total_data = {0};
+            is_ok = parse_file(file_name, &total_data);
+            if (!is_ok) {
+                ck_assert_int_eq(is_ok, OK);
+                continue;
+            }
             coord_matrix test_result = {0};
-            init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+            is_ok = init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+            if (!is_ok) {
+                free_results(&total_data);
+                ck_assert_int_eq(is_ok, OK);
+                continue;
+            }
             double coefficient = total_data.coordMatrix.scale_coefficient;
             for (unsigned int i = 0; i < test_result.rows; ++i) {
                 for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
                     if (j == type) {
                         test_result.coordinates[i][j] =
-                                (total_data.coordMatrix.coordinates[i][j] + coefficient * diff) *
-                                diff;  // тест, на то, что все сдвинется именно по х на 5
+                                (total_data.coordMatrix.coordinates[i][j] + coefficient * diff) * diff;
                     } else {
-                        test_result.coordinates[i][j] =
-                                total_data.coordMatrix.coordinates[i][j] * diff;
+                        test_result.coordinates[i][j] = total_data.coordMatrix.coordinates[i][j] * diff;
                     }
                 }
             }
@@ -488,19 +512,16 @@ START_TEST(s21_move_scale_xyz_m11_11) {
             int scale_ok = OK;
             switch (type) {
                 case 0:
-                    move_ok = move_coordinate(&total_data.coordMatrix, diff, 0,
-                                              0);  // по х на diff
+                    move_ok = move_coordinate(&total_data.coordMatrix, diff, 0, 0);
                     break;
                 case 1:
-                    move_ok = move_coordinate(&total_data.coordMatrix, 0, diff,
-                                              0);
+                    move_ok = move_coordinate(&total_data.coordMatrix, 0, diff, 0);
                     break;
                 case 2:
-                    move_ok = move_coordinate(&total_data.coordMatrix, 0, 0,
-                                              diff);
+                    move_ok = move_coordinate(&total_data.coordMatrix, 0, 0, diff);
                     break;
             }
-            scale_ok = scale_coordinate(&total_data.coordMatrix, diff);  // по х на diff
+            scale_ok = scale_coordinate(&total_data.coordMatrix, diff);
             if (move_ok != OK || scale_ok != OK) {
                 is_ok = AFFIN_FAIL;
                 printf("We can not do this transformation!\n");
@@ -518,7 +539,6 @@ START_TEST(s21_move_scale_xyz_m11_11) {
             }
             free_coord_matrix(&test_result);
             free_results(&total_data);
-
             printf("\n");
         }
     }
@@ -527,23 +547,32 @@ START_TEST(s21_move_scale_xyz_m11_11) {
 END_TEST
 
 START_TEST(s21_scale_move_xyz_m11_11) {
+    // type is type of coordinate (x, y, z), diff is step
     for (unsigned int type = 0; type < 3; ++type) {
         for (double diff = -11; diff <= 11; diff += 5) {
             int is_ok = OK;
             printf("Test check moving and scale for  coord by 5\n");
             char file_name[] = "test_files_obj/simple_cub.txt";
-            obj_data total_data = {0};  //создание итоговой структуры
-            parse_file(file_name, &total_data);
+            obj_data total_data = {0};
+            is_ok = parse_file(file_name, &total_data);
+            if (!is_ok) {
+                ck_assert_int_eq(is_ok, OK);
+                continue;
+            }
             print_data(total_data);
             coord_matrix test_result = {0};
-            init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+            is_ok = init_coord_matrix(&test_result, total_data.number_vertex, NUMBER_COLS);
+            if (!is_ok) {
+                free_results(&total_data);
+                ck_assert_int_eq(is_ok, OK);
+                continue;
+            }
             double coefficient = total_data.coordMatrix.scale_coefficient;
             for (unsigned int i = 0; i < test_result.rows; ++i) {
                 for (unsigned int j = 0; j < NUMBER_COLS; ++j) {
                     if (j == type) {
                         test_result.coordinates[i][j] =
-                                (total_data.coordMatrix.coordinates[i][j] + diff * coefficient) *
-                                diff;  // тест, на то, что все сдвинется именно по х на 5
+                                (total_data.coordMatrix.coordinates[i][j] + diff * coefficient) * diff;
                     } else {
                         test_result.coordinates[i][j] =
                                 total_data.coordMatrix.coordinates[i][j] * diff;
@@ -592,16 +621,18 @@ START_TEST(s21_rotate_XYZ) {  // без проверки значений
     for (double diff = -s21_PI_2; diff <= s21_PI_2; diff += s21_PI_4) {
         int is_ok = OK;
         printf("Test rotate for x,y,z coord by 15\n");
-        printf("angle is %lf\n", diff);
         char file_name[] = "test_files_obj/simple_test_2_spaces.txt";
-        obj_data total_data = {0};  //создание итоговой структуры
-        parse_file(file_name, &total_data);
+        obj_data total_data = {0};
+        is_ok = parse_file(file_name, &total_data);
+        if (!is_ok) {
+            ck_assert_int_eq(is_ok, OK);
+            continue;
+        }
         print_data(total_data);
 
         int rot_x = rotate_X(&total_data.coordMatrix, diff);
         int rot_y = rotate_Y(&total_data.coordMatrix, diff);
         int rot_z = rotate_Z(&total_data.coordMatrix, diff);
-
 
         if (rot_x != OK || rot_y != OK || rot_z != OK) {
             is_ok = AFFIN_FAIL;
@@ -618,123 +649,109 @@ START_TEST(s21_rotate_XYZ) {  // без проверки значений
 
 END_TEST
 
-// тесты оцентровки
-START_TEST(s21_move_to_center_1) {  // перенос к центру координат
+// tests for paint to the center
+
+START_TEST(s21_move_to_center_1) {
     char file_name[] = "test_files_obj/simple_cub.txt";
     int is_ok = OK;
-    obj_data total_data = {0};  // создание итоговой структуры
+    obj_data total_data = {0};
     is_ok = parse_file(file_name, &total_data);
-    print_data(total_data);
-
-    if (is_ok) {
-        is_ok = check_polygons(
-                &total_data);  // проверка, чтобы каждое значение вершины в полигонах
-        // было строго больше 0 и в пределах количества вершин
+    if (!is_ok) {
+        free_results(&total_data);
+    } else {
+        print_data(total_data);
+        is_ok = check_polygons(&total_data);
         if (!is_ok) {
-            free_results(
-                    &total_data);  // память уже выделена и заполнена, но в массиве для
-            // построения есть некорректные данные, поэтому дальше
-            // мы эти данные не пропустим, а память почистим
+            free_results(&total_data);
+        } else {
+            double extrems[6] = {0};
+            calculate_extrems(total_data.coordMatrix, extrems);
+            is_ok = move_to_center(&total_data, extrems);
+            if (!is_ok) {
+                free_results(&total_data);
+            } else {
+                printf("After center\n");
+                print_data(total_data);
+                calculate_extrems(total_data.coordMatrix, extrems);
+                for (int i = 0; i < NUMBER_COORD_XYZ; ++i) {
+                    ck_assert_ldouble_eq_tol(fabs(extrems[2 * i]), fabs(extrems[2 * i + 1]), s21_EPS);
+                }
+                free_results(&total_data);
+            }
         }
     }
-    double extrems[6] = {0};
-    calculate_extrems(total_data.coordMatrix, extrems);
-    is_ok = move_to_center(&total_data, extrems);
-    if (is_ok) {
-        printf("After center\n");
-        print_data(total_data);
-    }
-
     ck_assert_int_eq(is_ok, OK);
-    calculate_extrems(total_data.coordMatrix, extrems); // пересчет проверки
-    for (int i = 0; i < NUMBER_COORD_XYZ; ++i) { // проверяем что максимумы и минимумы фигуры зеркальны осям
-        ck_assert_ldouble_eq_tol(fabs(extrems[2 * i]),
-                                 fabs(extrems[2 * i + 1]), s21_EPS);
-    }
-
-    if (is_ok) {
-        free_results(&total_data);
-    }
 }
 
 END_TEST
 
 
-START_TEST(s21_move_to_center_cub) {  // перенос к центру координат
+START_TEST(s21_move_to_center_cub) { 
     char file_name[] = "test_files_obj/simple_cub.txt";
     int is_ok = OK;
-    obj_data total_data = {0};  // создание итоговой структуры
+    obj_data total_data = {0};
     is_ok = parse_file(file_name, &total_data);
     print_data(total_data);
-
     if (is_ok) {
-        is_ok = check_polygons(
-                &total_data);  // проверка, чтобы каждое значение вершины в полигонах
-        // было строго больше 0 и в пределах количества вершин
+        is_ok = check_polygons(&total_data);
         if (!is_ok) {
-            free_results(
-                    &total_data);  // память уже выделена и заполнена, но в массиве для
-            // построения есть некорректные данные, поэтому дальше
-            // мы эти данные не пропустим, а память почистим
+            free_results(&total_data);
         }
-    }
-
-    is_ok = preparation_to_init_draw(&total_data);
-
-    if (is_ok) {
-        printf("After center\n");
-        print_data(total_data);
-    }
-
-    ck_assert_int_eq(is_ok, OK);
-    if (is_ok) {
-        free_results(&total_data);
+        is_ok = preparation_to_init_draw(&total_data);
+        if (is_ok) {
+            printf("After center\n");
+            print_data(total_data);
+            free_results(&total_data);
+        }
+        ck_assert_int_eq(is_ok, OK);
     }
 }
 
 END_TEST
 
+// tests for counting numbers of edges
 
-// тест количества граней
-
-
-START_TEST(s21_edge_number) {  // перенос к центру координат
+START_TEST(s21_edge_number) {  
     char file_name[] = "test_files_obj/simple_cub.txt";
     int is_ok = OK;
-    obj_data total_data = {0};  // создание итоговой структуры
+    obj_data total_data = {0};
     is_ok = parse_file(file_name, &total_data);
-
-    int edge_number = get_edges_number(total_data.polygons, total_data.number_polygons);
-    ck_assert_int_eq(is_ok, OK);
-    ck_assert_int_eq(edge_number, 4);
-
     if (is_ok) {
+        int edge_number = get_edges_number(total_data.polygons, total_data.number_polygons);
+        ck_assert_int_eq(edge_number, 4);
         free_results(&total_data);
     }
+    ck_assert_int_eq(is_ok, OK);
 }
 
 END_TEST
 
-START_TEST(s21_edge_number_3d) {  // перенос к центру координат
+START_TEST(s21_edge_number_3d) {  
     char file_name[] = "test_files_obj/cube.txt";
     int is_ok = OK;
-    obj_data total_data = {0};  // создание итоговой структуры
+    obj_data total_data = {0};
     is_ok = parse_file(file_name, &total_data);
-
-    int edge_number = get_edges_number(total_data.polygons, total_data.number_polygons);
-    ck_assert_int_eq(is_ok, OK);
-    ck_assert_int_eq(edge_number, 18);
-
     if (is_ok) {
+        int edge_number = get_edges_number(total_data.polygons, total_data.number_polygons);
+        ck_assert_int_eq(edge_number, 18);
         free_results(&total_data);
     }
+    ck_assert_int_eq(is_ok, OK);
 }
 
 /*
-START_TEST(s21_edge_number_big_3d) {  // перенос к центру координат
+START_TEST(s21_simple_good_big_file) {
+    printf("Test s21_simple_good_big_file\n");
+    char file_name[] = "test_files_obj/good_man.obj";
+    int status = parsing_process_for_tests(file_name);
+    printf("\n");
+    ck_assert_int_eq(status, OK);
+}
+
+START_TEST(s21_edge_number_big_3d) {  
     char file_name[] = "test_files_obj/good_cat.obj";
     int is_ok = OK;
-    obj_data total_data = {0};  // создание итоговой структуры
+    obj_data total_data = {0};  
     is_ok = parse_file(file_name, &total_data);
 
     int edge_number = get_edges_number(total_data.polygons, total_data.number_polygons);
@@ -758,7 +775,6 @@ int main(void) {
     suite_add_tcase(s, s21_viewer_h);
 
     // good tests
-    //  tcase_add_test(s21_viewer_h, s21_simple_good_man; под него нельзя загружать файлы в гитлаб, при необходимости запустить отдельно
     tcase_add_test(s21_viewer_h, s21_simple_good_test_file_2_spaces);
     tcase_add_test(s21_viewer_h, s21_simple_good_test_file_1_spaces);
     tcase_add_test(s21_viewer_h, s21_4_coordinates);
@@ -784,7 +800,7 @@ int main(void) {
     tcase_add_test(s21_viewer_h, s21_check_0);
     tcase_add_test(s21_viewer_h, s21_check_big);
 
-    // affine test
+    // affine tests
     tcase_add_test(s21_viewer_h, s21_move_xyz_m10_10);
     tcase_add_test(s21_viewer_h, s21_scale_xyz_m11_11);
     tcase_add_test(s21_viewer_h, s21_rotate_X);
@@ -794,14 +810,17 @@ int main(void) {
     tcase_add_test(s21_viewer_h, s21_scale_move_xyz_m11_11);
     tcase_add_test(s21_viewer_h, s21_rotate_XYZ);
 
-    // тесты оцентровки
+    // tests of paint to the center
     tcase_add_test(s21_viewer_h, s21_move_to_center_1);
     tcase_add_test(s21_viewer_h, s21_move_to_center_cub);
 
-    // тест количества граней
+    // tests number of edges
     tcase_add_test(s21_viewer_h, s21_edge_number);
     tcase_add_test(s21_viewer_h, s21_edge_number_3d);
-  //  tcase_add_test(s21_viewer_h, s21_edge_number_big_3d); тест для отработки больших фигур, его объект нельзя грузить в гитлаб, придется вызывать вручную
+
+    // tests with heavy sources. There is needed download .obj file manually
+    //  tcase_add_test(s21_viewer_h, s21_simple_good_man);
+    //  tcase_add_test(s21_viewer_h, s21_edge_number_big_3d);
 
     srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_ENV);
