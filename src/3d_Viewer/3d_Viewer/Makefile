@@ -77,7 +77,7 @@ valgrind: $(TARGET)
 	CK_FORK=no valgrind $(VALGRIND_FLAGS) --log-file=RESULT_VALGRIND.txt ./test
 
 clang:
-	cp ../materials/linters/.clang-format ../src/.clang-format
+	cp ../../../materials/linters/.clang-format ./.clang-format
 	clang-format -style=Google -i *.c *.h *.cpp
 	clang-format -style=Google -n *.c *.h *.cpp
 	rm .clang-format

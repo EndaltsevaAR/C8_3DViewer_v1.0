@@ -3,10 +3,10 @@
 
 #include <QDebug>
 #include <QFileInfo>
-#include <QOpenGLWidget>
-#include <QtWidgets/QWidget>
-#include <QWidget>
 #include <QOpenGLFunctions>
+#include <QOpenGLWidget>
+#include <QWidget>
+#include <QtWidgets/QWidget>
 
 extern "C" {
 #include "s21_viewer.h"
@@ -16,17 +16,9 @@ namespace Ui {
 class gl_viewer;
 }
 
-enum vertex_type {
-    CIRLCE,
-    SQUARE,
-    NOTHING
-};
+enum vertex_type { CIRLCE, SQUARE, NOTHING };
 
-enum error_type {
-    IS_OK,
-    FILE_ERROR,
-    PARSER_ERROR
-};
+enum error_type { IS_OK, FILE_ERROR, PARSER_ERROR };
 
 class gl_viewer : public QOpenGLWidget {
   Q_OBJECT
@@ -60,5 +52,4 @@ class gl_viewer : public QOpenGLWidget {
   Ui::gl_viewer *ui;
 };
 
-
-#endif // GL_VIEWER_H
+#endif  // GL_VIEWER_H

@@ -2,38 +2,37 @@
 int start(const char *file_name, obj_data *total_data);
 void free_results(obj_data *total_data);
 
-gl_viewer::gl_viewer(QWidget *parent) : QOpenGLWidget(parent) {
-}
+gl_viewer::gl_viewer(QWidget *parent) : QOpenGLWidget(parent) {}
 
 void gl_viewer::paintGL() {
-    glClearColor(background_color.redF(), background_color.greenF(),
-                 background_color.blueF(), background_color.alphaF());
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClearColor(background_color.redF(), background_color.greenF(),
+               background_color.blueF(), background_color.alphaF());
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    if (is_projection_ortho) {
-      glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-    } else {
-      glFrustum(-1, 1, -1, 1, 0, 4);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  if (is_projection_ortho) {
+    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+  } else {
+    glFrustum(-1, 1, -1, 1, 0, 4);
+  }
+
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+
+  if (is_file_loaded) {
+    if (vert_type != NOTHING) {
+      paint_vertex();
     }
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    if (is_file_loaded) {
-        if (vert_type != NOTHING) {
-            paint_vertex();
-        }
-        paint_object();
-    }
+    paint_object();
+  }
 }
 
 void gl_viewer::destroy_viewer() {
-   if(destroy_status) {
-       free_results(&total_data);
-   }
-   destroy_status = false;
+  if (destroy_status) {
+    free_results(&total_data);
+  }
+  destroy_status = false;
 }
 
 void gl_viewer::paint_object() {
@@ -44,13 +43,13 @@ void gl_viewer::paint_object() {
     glLineStipple(1, 0x1010);
   }
   for (unsigned int i = 0; i < total_data.number_polygons; i++) {
-      polygon currentPolygon = total_data.polygons[i];
-      for (unsigned int j = 0; j < currentPolygon.number_vertexes; j++) {
-        glBegin(GL_LINE_LOOP);
-        glColor3d(edge_color.redF(), edge_color.greenF(), edge_color.blueF());
-        unsigned int vertexIndex = currentPolygon.vertexes[j];
-        double *vertex = total_data.coordMatrix.coordinates[vertexIndex];
-        glVertex3d(vertex[0], vertex[1], vertex[2]);
+    polygon currentPolygon = total_data.polygons[i];
+    for (unsigned int j = 0; j < currentPolygon.number_vertexes; j++) {
+      glBegin(GL_LINE_LOOP);
+      glColor3d(edge_color.redF(), edge_color.greenF(), edge_color.blueF());
+      unsigned int vertexIndex = currentPolygon.vertexes[j];
+      double *vertex = total_data.coordMatrix.coordinates[vertexIndex];
+      glVertex3d(vertex[0], vertex[1], vertex[2]);
     }
     glEnd();
   }
@@ -62,17 +61,16 @@ void gl_viewer::paint_vertex() {
   glPointSize(vertex_depth);
 
   for (unsigned int i = 0; i < total_data.number_polygons; i++) {
-      polygon currentPolygon = total_data.polygons[i];
-      for (unsigned int j = 0; j < currentPolygon.number_vertexes; j++) {
-        glBegin(GL_POINTS);
-        glColor3d(vertex_color.redF(), vertex_color.greenF(), vertex_color.blueF());
-        unsigned int vertexIndex = currentPolygon.vertexes[j];
-        double *vertex = total_data.coordMatrix.coordinates[vertexIndex];
-        glVertex3d(vertex[0], vertex[1], vertex[2]);
-      }
-      glEnd();
+    polygon currentPolygon = total_data.polygons[i];
+    for (unsigned int j = 0; j < currentPolygon.number_vertexes; j++) {
+      glBegin(GL_POINTS);
+      glColor3d(vertex_color.redF(), vertex_color.greenF(),
+                vertex_color.blueF());
+      unsigned int vertexIndex = currentPolygon.vertexes[j];
+      double *vertex = total_data.coordMatrix.coordinates[vertexIndex];
+      glVertex3d(vertex[0], vertex[1], vertex[2]);
+    }
+    glEnd();
   }
   if (vert_type == CIRLCE) glDisable(GL_POINT_SMOOTH);
 }
-
-

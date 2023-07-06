@@ -28,24 +28,23 @@
 #include <string.h>
 
 typedef struct Coord_matrix {
-    double **coordinates;
-    unsigned int rows;
-    unsigned int cols;
-    double scale_coefficient;
+  double **coordinates;
+  unsigned int rows;
+  unsigned int cols;
+  double scale_coefficient;
 } coord_matrix;
 
 typedef struct Poligon {
-    unsigned int *vertexes;
-    unsigned int number_vertexes;
+  unsigned int *vertexes;
+  unsigned int number_vertexes;
 } polygon;
 
 typedef struct Obj_data {
-    unsigned int number_vertex;
-    unsigned int number_polygons;
-    coord_matrix coordMatrix;
-    polygon *polygons;
+  unsigned int number_vertex;
+  unsigned int number_polygons;
+  coord_matrix coordMatrix;
+  polygon *polygons;
 } obj_data;
-
 
 int parsing_process_for_tests(const char *file_name);
 
@@ -87,7 +86,8 @@ void free_polygons(obj_data *total_data, unsigned int crash_number);
 void free_results(obj_data *total_data);
 
 // affine functions
-int move_coordinate(coord_matrix *coordMatrix, double diffX, double diffY, double diffZ);
+int move_coordinate(coord_matrix *coordMatrix, double diffX, double diffY,
+                    double diffZ);
 
 int scale_coordinate(coord_matrix *coordMatrix, double diff);
 
@@ -98,9 +98,11 @@ int rotate_Y(coord_matrix *coordMatrix, double angleY);
 int rotate_Z(coord_matrix *coordMatrix, double angleZ);
 
 // support for affine funstions
-int init_move_matrix(coord_matrix *affin_matrix, double diffX, double diffY, double diffZ);
+int init_move_matrix(coord_matrix *affin_matrix, double diffX, double diffY,
+                     double diffZ);
 
-int init_scale_matrix(coord_matrix *affin_matrix, double diffX, double diffY, double diffZ);
+int init_scale_matrix(coord_matrix *affin_matrix, double diffX, double diffY,
+                      double diffZ);
 
 int init_rotateX_matrix(coord_matrix *affin_matrix, double diffX);
 
@@ -112,7 +114,6 @@ int init_vector_matrix(coord_matrix *vector_matrix, coord_matrix *init_matrix,
                        unsigned int vector_i);
 
 int s21_mult_matrix(coord_matrix *A, coord_matrix *B, coord_matrix *result);
-
 
 // fuction for initialization to paint
 void calculate_extrems(coord_matrix coordMatrix, double *extrems);
