@@ -9,13 +9,13 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ../../s21_viewer.c \
+    s21_viewer.c \
     gl_viewer.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    ../../s21_viewer.h \
+    s21_viewer.h \
     gl_viewer.h \
     mainwindow.h
 

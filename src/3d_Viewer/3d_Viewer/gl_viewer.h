@@ -9,7 +9,7 @@
 #include <QOpenGLFunctions>
 
 extern "C" {
-#include "../../s21_viewer.h"
+#include "s21_viewer.h"
 }
 
 namespace Ui {
