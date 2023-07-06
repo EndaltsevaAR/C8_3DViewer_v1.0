@@ -26,6 +26,7 @@ public:
     double x_move_in, y_move_in, z_move_in;
     double x_rotate_in, y_rotate_in, z_rotate_in;
     double scale_bigger, scale_smaller;
+  //  QSettings *settings;
 
    void set_start_information();
    void set_default_settings_figure();
@@ -51,6 +52,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QSettings *settings;
+
 };
 #endif // MAINWINDOW_H
